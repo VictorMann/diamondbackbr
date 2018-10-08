@@ -1,8 +1,8 @@
 <?php
 
-use App\Produto;
 namespace App\Http\Controllers;
 
+use App\Produto;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
