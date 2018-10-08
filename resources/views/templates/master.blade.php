@@ -27,25 +27,25 @@
             <nav class="container">
                 <ul class="nav-main">
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="#">Diamondback</a></li>
+                    <li><a href="{{ route('diamondbacks.index') }}">Diamondback</a></li>
                     <li>
                         <a href="#">Produtos</a>
                         <ul class="nav-sub">
-                            <li><a href="#">Bicicletas</a></li>
-                            <li><a href="#">Quadros</a></li>
-                            <li><a href="#">Componentes</a></li>
-                            <li><a href="#">Ferramentas</a></li>
+                        <li><a href="{{ route('produtos.index', ['categoria' => 'bicicletas']) }}">Bicicletas</a></li>
+                            <li><a href="{{ route('produtos.index', ['categoria' => 'quadros']) }}">Quadros</a></li>
+                            <li><a href="{{ route('produtos.index', ['categoria' => 'componentes']) }}">Componentes</a></li>
+                            <li><a href="{{ route('produtos.index', ['categoria' => 'ferramentas']) }}">Ferramentas</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">Lojas</a>
                         <ul class="nav-sub">
-                            <li><a href="#">Seja um revendedor</a></li>
-                            <li><a href="#">Encontre uma loja</a></li>
+                            <li><a href="{{ route('lojas.revendedor') }}">Seja um revendedor</a></li>
+                            <li><a href="{{ route('lojas.encontre') }}">Encontre uma loja</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Garantia</a></li>
-                    <li><a href="#">Contato</a></li>
+                    <li><a href="{{ route('garantias.index') }}">Garantia</a></li>
+                    <li><a href="{{ route('contatos.index') }}">Contato</a></li>
                 </ul>
             </nav>
         </div>
@@ -57,21 +57,21 @@
         <div class="fend container">
             <ul class="list-unstyled">
                 <li>Institucional</li>
-                <li><a href="#">Diamondback</a></li>
-                <li><a href="#">Garantia</a></li>
-                <li><a href="#">Contato</a></li>
+                <li><a href="{{ route('diamondbacks.index') }}">Diamondback</a></li>
+                <li><a href="{{ route('garantias.index') }}">Garantia</a></li>
+                <li><a href="{{ route('contatos.index') }}">Contato</a></li>
             </ul>
             <ul class="list-unstyled">
                 <li>Produtos</li>
-                <li><a href="#">Bicicletas</a></li>
-                <li><a href="#">Quadros</a></li>
-                <li><a href="#">Componentes</a></li>
-                <li><a href="#">Ferramentas</a></li>
+                <li><a href="{{ route('produtos.index', ['categoria' => 'bicicletas']) }}">Bicicletas</a></li>
+                <li><a href="{{ route('produtos.index', ['categoria' => 'quadros']) }}">Quadros</a></li>
+                <li><a href="{{ route('produtos.index', ['categoria' => 'componentes']) }}">Componentes</a></li>
+                <li><a href="{{ route('produtos.index', ['categoria' => 'ferramentas']) }}">Ferramentas</a></li>
             </ul>
             <ul class="list-unstyled">
                 <li>Lojas</li>
-                <li><a href="#">Seja um revendedor</a></li>
-                <li><a href="#">Encontre uma loja</a></li>
+                <li><a href="{{ route('lojas.revendedor') }}">Seja um revendedor</a></li>
+                <li><a href="{{ route('lojas.encontre') }}">Encontre uma loja</a></li>
             </ul>
             <form method="POST">
                 <fieldset>
