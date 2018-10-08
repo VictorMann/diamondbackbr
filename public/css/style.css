@@ -1,0 +1,151 @@
+img {
+    max-width: 100%;
+}
+a:focus,
+a:hover {
+    text-decoration: none;
+}
+.topo {
+    border-top: 2px solid #ee4625;
+    padding-top: 1rem;
+}
+.topo .t1 {
+    margin-bottom: 1rem;
+}
+#logo img {
+    max-width: 250px;
+}
+#search {
+    position: relative;
+    margin: 0;
+    margin-top: 5px;
+}
+#search input {
+    width: 250px;
+    padding-right: 4rem;
+}
+#search button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4rem;
+    background: transparent;
+    border: none;
+}
+#search .glyphicon {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    color: #999;
+}
+.ctn-nav-main {
+    background-color: #2a2f33;
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
+    background-image:  repeating-linear-gradient(135deg,#2a2f33, #ef4725 100px, #2a2f33 100px, #2a2f33 200px);
+    background-size: 100% 1px;
+}
+.nav-main {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+}
+.nav-main > li {
+    position: relative;
+}
+.nav-main a {
+    display: inline-block;
+    color: #FFF;
+    text-transform: uppercase;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 1.4em;
+    padding: .3em .5em;
+
+    transition: color .1s;
+}
+.nav-main > li:first-of-type a {
+    padding-left: 0;
+}
+.nav-main > li:last-of-type a {
+    padding-right: 0;
+}
+.nav-main > li:hover > a {
+    color: #c7c7c7;
+}
+.nav-main li:hover .nav-sub {
+    display: block;
+}
+.nav-sub {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background: #fff;
+    padding: 0;
+    margin: 0;
+    min-width: 185px;
+    border: 2px solid #2a2f33;
+    border-top: none;
+    overflow: hidden;
+
+    border-bottom-right-radius: 10px;
+}
+.nav-sub a {
+    color: #2a2f33;
+    display: block;
+    padding-left: 1em;
+}
+.nav-sub a:hover {
+    background: #ECECEC;
+}
+.ctn-fend {
+    background: #2a2f33;
+    color: white;
+}
+.fend {
+    display: flex;
+    padding-top: 2rem;
+    margin-bottom: 1rem;
+}
+.fend a,
+.fend legend {
+    color: white;
+}
+.fend > * {
+    flex: 1;
+}
+.fend ul,
+.fend legend {
+    font-family: 'Fjalla One', sans-serif;
+}
+.fend ul li:first-child {
+    font-size: 1.4em;
+    margin-bottom: 1rem;
+}
+.fend ul a:hover {
+    color: #ee4625;
+}
+.fend fieldset {
+    padding-left: 4rem;
+}
+.fend legend {
+    border: none;
+    margin-bottom: 1rem;
+}
+.fend .news-b {
+    color: #ee4625;
+}
+.fend input {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.copyright {
+    font-size: .85em;
+    color: #738696;
+    border-top: 1px solid #444;
+}
+.copyright p {
+    margin: 1rem 0;
+}
