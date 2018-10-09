@@ -1,0 +1,11 @@
+.h img {
+    float: left;
+    border: 10px solid #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+    margin-right: 2rem;
+    max-width: 500px;
+}
+.h p {
+    font-size: 16px;
+    line-height: 1.6;
+}

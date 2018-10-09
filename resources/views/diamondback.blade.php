@@ -4,10 +4,15 @@
     História
 @endsection
 
+@section("styles")
+    <link rel="stylesheet" href="{{ url('/') }}/css/diamondback.css">
+@endsection
+
 @section("content")
-<section class="container">
+<section class="container h pp">
     <div class="row">
         <div class="col-md-12">
+            <h1 class="header-page">Um pouco de história</h1>
             <img src="{{ url('/') }}/imgs/history.jpg">
             <p>A DIAMONDBACK é uma das grandes marcas de bicicletas presentes no mundo! Com sede em Kent, Washington, os produtos Diamondback são vendidos em muitos países, incluindo os Estados Unidos, Austrália, Canadá, Bangladesh, Reino Unido e Brasil.</p>
             <p>A marca foi fundada na Califórnia, em 1977, como uma marca radical de BMX e não demorou muito para que se expandisse para o novo mundo da Mountain Bike. Desde então, ciclistas do mundo todo começaram a optar pela qualidade, a tecnologia e o custo benefício da Diamondback.
