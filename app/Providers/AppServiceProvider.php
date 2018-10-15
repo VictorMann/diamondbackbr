@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Categoria;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('partials.lista-categorias', function ($view) {
+            $view->with('categorias', Categoria::get());
+        });
     }
 
     /**
