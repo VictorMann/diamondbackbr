@@ -31,10 +31,7 @@
                     <li>
                         <a href="#">Produtos</a>
                         <ul class="nav-sub">
-                        <li><a href="{{ route('produtos.index', ['categoria' => 'bicicletas']) }}">Bicicletas</a></li>
-                            <li><a href="{{ route('produtos.index', ['categoria' => 'quadros']) }}">Quadros</a></li>
-                            <li><a href="{{ route('produtos.index', ['categoria' => 'componentes']) }}">Componentes</a></li>
-                            <li><a href="{{ route('produtos.index', ['categoria' => 'ferramentas']) }}">Ferramentas</a></li>
+                            @include('partials.lista-categorias')
                         </ul>
                     </li>
                     <li>
@@ -63,10 +60,7 @@
             </ul>
             <ul class="list-unstyled">
                 <li>Produtos</li>
-                <li><a href="{{ route('produtos.index', ['categoria' => 'bicicletas']) }}">Bicicletas</a></li>
-                <li><a href="{{ route('produtos.index', ['categoria' => 'quadros']) }}">Quadros</a></li>
-                <li><a href="{{ route('produtos.index', ['categoria' => 'componentes']) }}">Componentes</a></li>
-                <li><a href="{{ route('produtos.index', ['categoria' => 'ferramentas']) }}">Ferramentas</a></li>
+                @include('partials.lista-categorias')
             </ul>
             <ul class="list-unstyled">
                 <li>Lojas</li>

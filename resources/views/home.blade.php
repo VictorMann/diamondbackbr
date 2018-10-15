@@ -12,10 +12,7 @@
 </section>
 <section class="ctn-cat">
     <ul class="cat">
-    <li><a href="{{ route('produtos.index', ['categoria' => 'bicicletas']) }}">Bicicletas</a></li>
-        <li><a href="{{ route('produtos.index', ['categoria' => 'quadros']) }}">Quadros</a></li>
-        <li><a href="{{ route('produtos.index', ['categoria' => 'componentes']) }}">Components</a></li>
-        <li><a href="{{ route('produtos.index', ['categoria' => 'ferramentas']) }}">Ferramentas</a></li>
+        @include('partials.lista-categorias')
     </ul>
 </section>
 <section class="ctn-h-p">
