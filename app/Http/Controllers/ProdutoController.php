@@ -12,7 +12,7 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::select('titulo', 'ano', 'image', 'slug')
         ->where('categoria_id', $categoria->id)
-        ->get();
+        ->paginate(16);
 
         return view('lista-produtos-categoria')->with('produtos', $produtos);
     }
