@@ -1,0 +1,20 @@
+.ctn-grade-img {
+    display: flex;
+    flex-wrap: wrap;
+}
+.ctn-product {
+    width: 270px;
+    text-align: center;
+    margin: 0 5px;
+    margin-bottom: 15px;
+}
+.product-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 270px;
+}
+.product-name {
+    color: #333;
+    font-size: 1.1em;
+}
