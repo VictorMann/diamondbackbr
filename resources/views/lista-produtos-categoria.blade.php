@@ -2,7 +2,7 @@
 @inject('request', 'Illuminate\Http\Request')
 
 @section('title')
-    {{ ucfirst($request->segment(1)) }}
+    {{ ucfirst($nome_categoria) }}
 @endsection
 
 @section('styles')
@@ -11,7 +11,7 @@
 
 @section('content')
 <section class="container">
-    <h1>{{ $request->segment(1) }}</h1>
+    <h1>{{ $nome_categoria }}</h1>
     <div class="ctn-grade-img">
         @forelse ($produtos as $produto)
         <div class="ctn-product">
