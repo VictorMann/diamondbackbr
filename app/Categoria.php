@@ -11,6 +11,6 @@ class Categoria extends Model
 
     public function getRouteKeyName ()
     {
-        return 'nome';
+        return 'slug';
     }
 }
