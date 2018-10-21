@@ -1,3 +1,15 @@
+.titulo-categoria {
+    font-family: 'Fjalla One', sans-serif;
+}
+.titulo-categoria::first-letter {
+    text-transform: uppercase;
+}
+.titulo-categoria::after {
+    content: '';
+    display: block;
+    border-bottom: 5px solid #de4122;
+    width: 1em;
+}
 .ctn-grade-img {
     display: flex;
     flex-wrap: wrap;

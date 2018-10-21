@@ -10,8 +10,8 @@
 @endsection
 
 @section('content')
-<section class="container">
-    <h1>{{ $nome_categoria }}</h1>
+<section class="container cat">
+    <h1 class="titulo-categoria">{{ $nome_categoria }}</h1>
     <div class="ctn-grade-img">
         @forelse ($produtos as $produto)
         <div class="ctn-product">
