@@ -1,5 +1,9 @@
 @extends("templates.master")
 
+@section("styles")
+    <link rel="stylesheet" href="{{ url('/') }}/css/revendedor.css">
+@endsection
+
 @section("content")
 <section class="container rev">
     <h1 class="header-page">Seja um revendedor Diamondback</h1>
@@ -11,6 +15,9 @@
         <p>ATENÇÃO: Após preencher o formulário, não se esqueça de anexar uma cópia do CONTRATO SOCIAL para validação do seu cadastro.</p>
         <p>Para dúvidas ou informações, em contato com nosso Depto. de Vendas pelo telefone: (11) 2824-3333 ou pelo e-mail: contato@diamondback.com.br de 2ª a 6ª feira das 8h às 18h para obter mais informações.</p>
         <p>Invista no seu negócio, venha fazer parte deste time.</p>
+    </div>
+    <div>
+        <button class="btn btn-sm btn-primary">Deseja fazer parte do nosso time?</button>
     </div>
 </section>
 @endsection
