@@ -1,0 +1,6 @@
+.form-contato {
+    margin-bottom: 2rem;
+}
+.form-contato textarea {
+    min-height: 150px;
+}
