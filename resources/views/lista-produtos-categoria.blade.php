@@ -11,7 +11,7 @@
 
 @section('content')
 <section class="container cat">
-    <h1 class="titulo-categoria">{{ $nome_categoria }}</h1>
+    <h1 class="header-page">{{ $nome_categoria }}</h1>
     <div class="ctn-grade-img">
         @forelse ($produtos as $produto)
         <div class="ctn-product">
