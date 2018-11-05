@@ -1,0 +1,58 @@
+.pr-header {
+    display: flex;
+    margin-bottom: 30px;
+}
+.pr-header > * {
+    margin-top: 25px;
+    
+    flex: 1;
+}
+.pr-img {
+    
+}
+.pr-img img {
+    max-height: 100%;
+}
+.pr-title {
+    padding-left: 20px;
+}
+.pr-title .title {
+    position: relative;
+    padding-top: 2rem;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 3em;
+}
+.pr-title .title small {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    font-size: 16px;
+}
+.pr-thumbnail {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+}
+.pr-thumbnail li {
+    background: #DDD;
+    width: 50px;
+    height: 45px;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+.pr-description {
+    margin-bottom: 30px;
+}
+.pr-description .title {
+    color: white;
+    background: #535c63;
+    font-size: 1em;
+    text-transform: uppercase;
+}
+.pr-description span {
+    display: inline-block;
+    border-right: 1px dotted white;
+    padding: .5em 1em;
+}
