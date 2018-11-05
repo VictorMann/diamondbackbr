@@ -20,4 +20,15 @@ class ProdutoController extends Controller
             'nome_categoria' => $categoria->nome
         ]);
     }
+
+    public function show ($slug)
+    {
+        $produto = Produto::where('slug', $slug)->first();
+        $categoria = Categoria::findOrFail($produto->categoria_id);
+
+        return view('produto')->with([
+            'produto' => $produto,
+            'categoria' => $categoria
+        ]);
+    }
 }
