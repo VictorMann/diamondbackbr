@@ -15,7 +15,7 @@
     <div class="ctn-grade-img">
         @forelse ($produtos as $produto)
         <div class="ctn-product">
-            <a href="{{ url('/') . '/' . $produto->slug }}">
+            <a href="{{ url('/') . '/p/' . $produto->slug }}">
                 <figure class="product-img">
                     <img src="{{ url('/') }}/imgs/products/{{ $produto->image }}">
                 </figure>
