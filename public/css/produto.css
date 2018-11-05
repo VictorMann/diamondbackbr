@@ -36,11 +36,16 @@
     margin-bottom: 30px;
 }
 .pr-thumbnail li {
-    background: #DDD;
-    width: 50px;
-    height: 45px;
+    width: 60px;
+    height: 50px;
     margin-right: 5px;
+    border: 3px solid #AAA;
     border-radius: 3px;
+    overflow: hidden;
+}
+.pr-thumbnail img {
+    width: 120%;
+    height: auto;
 }
 .pr-description {
     margin-bottom: 30px;
@@ -55,4 +60,33 @@
     display: inline-block;
     border-right: 1px dotted white;
     padding: .5em 1em;
+}
+.pr-rel {
+    border-top: 2px solid #AAA;
+    padding-top: 30px;
+    margin-bottom: 30px;
+}
+.pr-rel ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.pr-rel li {
+    position: relative;
+    width: 24%;
+    text-align: center;
+    border: 2px solid #aaa;
+    min-height: 260px;
+    padding: .5em;
+}
+.pr-r-img {
+
+}
+.pr-r-img .title {
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    width: 100%;
 }
