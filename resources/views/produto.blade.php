@@ -17,6 +17,7 @@
 
     @if (count($images))
     <ul class="pr-thumbnail">
+        <li><img src="{{ url('/') }}/imgs/products/{{ $produto->image }}"></li>
         @foreach ($images as $image)
         <li><img src="{{ url('/') }}/imgs/products/{{ $image->nome }}"></li>
         @endforeach
@@ -34,10 +35,10 @@
         <ul class="l">
             @foreach ($relacionados as $r)
             <li>
-                <a href="{{ url('/') }}/p/{{ $r->slug }}">
+                <a href="{{ url('/') }}/p/{{ $r->slug }}" title="{{ $r->titulo }}">
                     <div class="pr-r-img">
                         <figure>
-                            <img src="{{ url('/') }}/imgs/products/{{ $r->image }}">
+                            <img src="{{ url('/') }}/imgs/products/{{ $r->image }}" alt="{{ $r->titulo }}">
                         </figure>
                         <p class="title">{{ $r->titulo }}</p>
                     </div>
@@ -49,3 +50,7 @@
 
 </section>
 @endsection
+
+@section("scripts")
+<script src="{{ url('/') }}/js/produto.js"></script>
+@stop
