@@ -1,5 +1,6 @@
 body {
     font-family: 'Open Sans';
+    overflow-x: hidden;
 }
 img {
     max-width: 100%;
