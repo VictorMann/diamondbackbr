@@ -1,12 +1,14 @@
 @extends("templates.master")
 
 @section("styles")
+<link rel="stylesheet" href="{{ url('/') }}/css/slick.css">
 <link rel="stylesheet" href="{{ url('/') }}/css/home.css">
 @endsection
 
 @section("content")
 <section class="ctn-sel">
     <ul class="sel">
+        <li><img src="{{ url('/') }}/imgs/carrossel/imageExample.jpg"></li>
         <li><img src="{{ url('/') }}/imgs/carrossel/imageExample.jpg"></li>
     </ul>
 </section>
@@ -32,3 +34,8 @@
     @endforeach
 </section>
 @endsection
+
+@section("scripts")
+<script src="{{ url('/') }}/js/slick.min.js"></script>
+<script src="{{ url('/') }}/js/home.js"></script>
+@stop
