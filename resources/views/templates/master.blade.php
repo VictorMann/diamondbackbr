@@ -88,6 +88,6 @@
         </div>
     </footer>
     <script src="{{ url('/') }}/js/jquery.min.js"></script>
-    @section("scripts")
+    @yield("scripts")
 </body>
 </html>
