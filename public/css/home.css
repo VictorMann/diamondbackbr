@@ -1,7 +1,17 @@
 .sel {
+    position: relative;
     list-style: none;
     padding: 0;
     margin: 0;
+}
+.sel:hover .slick-arrow {
+    opacity: 1;
+}
+.sel:hover .slick-prev {
+    left: 2%;
+}
+.sel:hover .slick-next {
+    right: 2%;
 }
 .sel img {
     width: 100%;
@@ -13,6 +23,56 @@
     padding: 0;
     margin: 0;
 }
+.slick-arrow {
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    text-align: center;
+    font-size: 4em;
+    color: rgba(0, 0, 0, .5);
+    background: transparent;
+    border: none;
+    transform: translateY(-50%);
+    opacity: 0;
+    z-index: 1;
+
+    transition: left .3s, right .3s, opacity .3s;
+}
+.slick-arrow:focus,
+.slick-arrow:active {
+    outline: none;
+}
+.slick-prev {
+    left: -2%;
+}
+.slick-next {
+    right: -2%;
+}
+.slick-dots {
+    list-style: none;
+    position: absolute;
+    bottom: 1%;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+.slick-dots li {
+    text-indent: -3000px;
+    color: transparent;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: rgba(0, 0, 0, .6);
+    margin-right: 5px;
+    border-radius: 50%;
+}
+.slick-dots li.slick-active {
+    background: #738696;
+}
+
+
+
 .cat > * {
     flex: 1;
     text-align: center;
