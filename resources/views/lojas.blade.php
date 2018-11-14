@@ -43,7 +43,18 @@
                         <area data-e="RR" shape="poly" href="{{ route('lojas.estado', ['estado' => 'rr']) }}" coords="269,91,249,91,243,98,242,110,236,113,231,107,227,107,222,111,223,121,218,121,213,118,206,110,210,101,207,95,205,84,206,77,201,68,201,60,193,57,190,56,188,49,185,52,177,51,178,45,175,40,175,29,167,20,176,22,183,23,189,23,194,31,199,29,201,24,207,20,211,22,228,14,237,9,239,0,247,0,250,4,246,11,250,14,254,14,254,19,256,20,253,28,249,31,253,34,248,43,251,50,252,54,254,55,253,63,258,66,267,73,270,81" />
                     </map>
                 </div>
-            </div>
+                <div class="cnt-legenda text-center">
+                    <div class="legenda panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Legenda</h3>
+                        </div>
+                        <ul class="panel-body list-unstyled text-left">
+                            <li><i class="leg leg-default"></i>não há revendas</li>
+                            <li><i class="leg leg-orange"></i>revendas disponíveis</li>
+                        </ul>
+                    </div>
+                </div> <!-- / .ctn-legenda -->
+            </div> <!-- fim.ctn-mapa -->
         </div>
     </div>
 </div>
