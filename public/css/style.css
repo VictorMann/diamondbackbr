@@ -113,7 +113,7 @@ a:hover {
     overflow: hidden;
 
     border-bottom-right-radius: 10px;
-    z-index: 1;
+    z-index: 10;
 }
 .nav-sub a {
     color: #2a2f33;
