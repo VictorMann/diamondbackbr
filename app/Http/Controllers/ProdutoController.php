@@ -15,10 +15,10 @@ class ProdutoController extends Controller
         ->where('categoria_id', $categoria->id)
         ->paginate(16);
 
-        return view('lista-produtos-categoria')
+        return view('lista-produtos')
         ->with([
             'produtos' => $produtos,
-            'nome_categoria' => $categoria->nome
+            'titulo' => $categoria->nome
         ]);
     }
 
