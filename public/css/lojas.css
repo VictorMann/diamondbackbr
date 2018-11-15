@@ -49,3 +49,13 @@
 .leg-orange {
     background: #d55f48;
 }
+.ctn-mini-estado {
+    position: absolute;
+    left: 50px;
+    bottom: 100px;
+    text-align: center;
+}
+.ctn-mini-estado .rev {
+    display: block;
+    color: red;
+}

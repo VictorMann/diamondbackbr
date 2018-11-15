@@ -1,4 +1,5 @@
 const $elEstMap = $('.mapa-img-estado-hover');
+const $elMinEst = $('.ctn-mini-estado');
 var revendas = {};
 
 $('area').on({
@@ -9,9 +10,18 @@ $('area').on({
             ? `url(imgs/mapa/${est}_ativo.gif)`
             : `url(imgs/mapa/${est}_.gif)`
         );
+
+        $elMinEst.find('.ctn-image').append($('<img>', {'src': `imgs/mapa/${est}.gif`}));
+        $elMinEst.find('.dados').html(() => {
+            let message = revendas[est].qtd 
+            ? revendas[est].qtd + ' revenda(s)'
+            : 'não há revendas';
+            return `${revendas[est].nome}<span class="rev">${message}</span>`;
+        });
     },
     'mouseout': function(e) {
         $elEstMap.css('background-image', '');
+        $elMinEst.find('div').empty();
     },
     'click': function(e) {
         let est = this.dataset.e;

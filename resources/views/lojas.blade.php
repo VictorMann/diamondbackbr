@@ -54,6 +54,10 @@
                         </ul>
                     </div>
                 </div> <!-- / .ctn-legenda -->
+                <div class="ctn-mini-estado">
+                    <div class="ctn-image"></div>
+                    <div class="dados"></div>
+                </div>
             </div> <!-- fim.ctn-mapa -->
         </div>
     </div>
