@@ -17,10 +17,9 @@
             <a href="{{ url('/') }}" id="logo" class="pull-left">
                 <img src="{{ url('/') }}/imgs/logo.png" alt="Logomarca Diamondback">
             </a>
-            <form id="search" action="#" class="pull-right">
-                {{ csrf_field() }}
-                <input type="text" class="form-control" placeholder="o que você procura?">
-                <button><span class="glyphicon glyphicon-search"></span></button>
+            <form id="search" action="{{ route('search.index') }}" class="pull-right">
+                <input name="s" type="text" class="form-control" placeholder="o que você procura?">
+                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
         <div class="ctn-nav-main">
