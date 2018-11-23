@@ -18,7 +18,7 @@
                 <img src="{{ url('/') }}/imgs/logo.png" alt="Logomarca Diamondback">
             </a>
             <form id="search" action="{{ route('search.index') }}" class="pull-right">
-                <input name="s" type="text" class="form-control" placeholder="o que você procura?">
+                <input name="s" type="text" class="form-control" placeholder="o que você procura?" required>
                 <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
@@ -87,6 +87,7 @@
         </div>
     </footer>
     <script src="{{ url('/') }}/js/jquery.min.js"></script>
+    <script src="{{ url('/') }}/js/app.js"></script>
     @yield("scripts")
 </body>
 </html>
