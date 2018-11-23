@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{{ url('/') }}/css/garantia.css">
 @endsection
 
+@section("title")
+    Termo de garantia
+@stop
+
 @section("content")
 <section class="container gar">
     <h1 class="header-page">Termo de garantia</h1>

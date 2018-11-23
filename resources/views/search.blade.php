@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ url('/') }}/css/search.css">
 @stop
 
+@section("title")
+    Busca por: '{{ $search }}'
+@stop
+
 @section("content")
 <div class="container psearch">
     <div class="header">

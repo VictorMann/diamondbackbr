@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ url('/') }}/css/lojas-estado.css">
 @endsection
 
+@section("title")
+    Revendas em {{ $estado }}
+@stop
+
 @section("content")
 <div class="container">
     <div class="row">

@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{{ url('/') }}/css/revendedor.css">
 @endsection
 
+@section("title")
+    Seja um revendedor
+@stop
+
 @section("content")
 <section class="container rev">
     <h1 class="header-page">Seja um revendedor Diamondback</h1>

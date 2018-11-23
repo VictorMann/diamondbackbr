@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ url('/') }}/css/produto.css">
 @endsection
 
+@section("title")
+{{ $produto->titulo }}
+@stop
+
 @section("content")
 <section class="container pr">
     <div class="pr-header">
