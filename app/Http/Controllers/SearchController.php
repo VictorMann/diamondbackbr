@@ -12,10 +12,18 @@ class SearchController extends Controller
         $search = $request->input('s');
         $produtos = Produto::where('titulo', 'like', "%{$search}%")->paginate(16);
 
+        $produtos->withPath('?s='. $search);
 
-        return view('lista-produtos')->with([
+        $pageAtual = $produtos->currentPage() * $produtos->perPage() - $produtos->perPage() + 1;
+        $pageLimit = $produtos->hasMorePages() ? $produtos->currentPage() * $produtos->perPage() : $produtos->total();
+        $pageTotalIntes = $produtos->total();
+
+        return view('search')->with([
             'produtos' => $produtos,
-            'titulo' => $search,
+            'search' => $search,
+            'pageAtual' => $pageAtual,
+            'pageLimit' => $pageLimit,
+            'pageTotalIntes' => $pageTotalIntes
         ]);
     }
 }
