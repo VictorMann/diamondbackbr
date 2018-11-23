@@ -1,0 +1,28 @@
+.header {
+    border-bottom: 1px solid #CCC;
+}
+.detail-page {
+    position: relative;
+    font-size: .9em;
+    padding: .3em 0;
+}
+.detail-page.bottom {
+    padding-top: 6em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #CCC;
+}
+.cnt-pagination {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+.psearch .pagination {
+    padding: 0;
+    margin: 0;
+}
+.msg-not-items {
+    font-size: 1.3em;
+    padding: 1.4rem 0;
+    margin-bottom: 8em;
+}
