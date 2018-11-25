@@ -4,21 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Produto;
+use App\Http\Traits\ProdutoPaginateTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
+    use ProdutoPaginateTrait;
+
     public function index (Categoria $categoria)
     {
         $produtos = Produto::select('titulo', 'ano', 'image', 'slug')
         ->where('categoria_id', $categoria->id)
         ->paginate(16);
 
-        return view('lista-produtos')
-        ->with([
+        // obtem dados de paginação personalizados
+        $this->getDataPaginate($produtos);
+        
+        return view('lista-produtos')->with([
             'produtos' => $produtos,
-            'titulo' => $categoria->nome
+            'titulo' => ucfirst($categoria->nome),
+            'header' => $categoria->nome,
+            'pageAtual' => $this->pageAtual,
+            'pageLimit' => $this->pageLimit,
+            'pageTotalIntes' => $this->pageTotalIntes
         ]);
     }
 

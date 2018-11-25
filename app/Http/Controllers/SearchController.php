@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Produto;
+use App\Http\Traits\ProdutoPaginateTrait;
 
 class SearchController extends Controller
 {
+    use ProdutoPaginateTrait;
+    
     public function index (Request $request)
     {
         $search = $request->input('s');
@@ -14,16 +17,16 @@ class SearchController extends Controller
 
         $produtos->withPath('?s='. $search);
 
-        $pageAtual = $produtos->currentPage() * $produtos->perPage() - $produtos->perPage() + 1;
-        $pageLimit = $produtos->hasMorePages() ? $produtos->currentPage() * $produtos->perPage() : $produtos->total();
-        $pageTotalIntes = $produtos->total();
+        // obtem dados de paginação personalizados
+        $this->getDataPaginate($produtos);
 
-        return view('search')->with([
+        return view('lista-produtos')->with([
             'produtos' => $produtos,
-            'search' => $search,
-            'pageAtual' => $pageAtual,
-            'pageLimit' => $pageLimit,
-            'pageTotalIntes' => $pageTotalIntes
+            'titulo' => "Busca por: '{$search}'",
+            'header' => "Resultado da busca para '{$search}'",
+            'pageAtual' => $this->pageAtual,
+            'pageLimit' => $this->pageLimit,
+            'pageTotalIntes' => $this->pageTotalIntes
         ]);
     }
 }
