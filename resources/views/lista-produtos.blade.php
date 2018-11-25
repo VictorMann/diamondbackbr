@@ -1,17 +1,29 @@
-@extends('templates.master')
-@inject('request', 'Illuminate\Http\Request')
+@extends("templates.master")
 
-@section('title')
-    {{ ucfirst($titulo) }}
-@endsection
+@section("styles")
+    <link rel="stylesheet" href="{{ url('/') }}/css/lista-produtos.css">
+@stop
 
-@section('styles')
-<link rel="stylesheet" href="{{ url('/') }}/css/category.css">
-@endsection
+@section("title")
+    {{ $titulo }}
+@stop
 
-@section('content')
-<section class="container cat">
-    <h1 class="header-page">{{ $titulo }}</h1>
+@section("content")
+<div class="container psearch">
+    <div class="header">
+        <h1 class="header-page">{{ $header }}</h1>
+        @if ($pageTotalIntes)
+        <div class="detail-page clearfix">
+            @if ($pageTotalIntes > $produtos->perPage())
+            <span>itens {{ $pageAtual }} para {{ $pageLimit }} de {{ $pageTotalIntes }} total</span>
+            @else
+            <span>{{ $pageTotalIntes }} item(ns)</span>
+            @endif
+            <div class="cnt-pagination">{{ $produtos->links() }}</div>
+        </div>
+        @endif
+    </div>
+    
     <div class="ctn-grade-img">
         @forelse ($produtos as $produto)
         <div class="ctn-product">
@@ -25,11 +37,18 @@
             </a>
         </div>
         @empty
-            No product
+            <p class="msg-not-items">Não existem produtos que correspondem com a busca.</p>
         @endforelse
     </div>
-    <div class="text-center">
-        {{ $produtos->links() }}
-    </div>
-</section>
-@endsection
+    @if ($pageTotalIntes)
+    <div class="detail-page bottom clearfix">
+            @if ($pageTotalIntes > $produtos->perPage())
+            <span>itens {{ $pageAtual }} para {{ $pageLimit }} de {{ $pageTotalIntes }} total</span>
+            @else
+            <span>{{ $pageTotalIntes }} item(ns)</span>
+            @endif
+            <div class="cnt-pagination">{{ $produtos->links() }}</div>
+        </div>
+    @endif
+</div> 
+@stop
