@@ -19,6 +19,7 @@ Route::get('encontre-uma-loja', 'LojaController@lojas')->name('lojas.encontre');
 Route::get('encontre-uma-loja/{estado}', 'LojaController@lojasPorEstado')->name('lojas.estado');
 Route::get('garantia', 'GarantiaController@index')->name('garantias.index');
 Route::get('contato', 'ContatoController@index')->name('contatos.index');
+Route::post('contato', 'ContatoController@send')->name('contatos.send');
 Route::get('search', 'SearchController@index')->name('search.index');
 Route::get('{categoria}', 'ProdutoController@index')->name('produtos.index');
 
