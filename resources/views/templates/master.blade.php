@@ -66,15 +66,14 @@
                 <li><a href="{{ route('lojas.revendedor') }}">Seja um revendedor</a></li>
                 <li><a href="{{ route('lojas.encontre') }}">Encontre uma loja</a></li>
             </ul>
-            <form method="POST">
+            <form id="form-newsletter">
                 <fieldset>
                     <legend>Novidades</legend>
                     <p>
                         Cadastre-se para receber novidades
                         exclusivas da <span class="news-b">Diamondback Brasil</span>
                     </p>
-                    {{ csrf_field() }}
-                    <input type="email" class="form-control" name="email" placeholder="seu email aqui">
+                    <input type="email" class="form-control" name="email" placeholder="seu email aqui" required>
                     <input type="submit" class="btn btn-primary" value="Enviar">
                 </fieldset>
             </form>
