@@ -4,3 +4,6 @@
 .form-contato textarea {
     min-height: 150px;
 }
+.alert {
+    margin-top: 2em;
+}
