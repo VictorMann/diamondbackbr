@@ -5,7 +5,7 @@ $('.form-contato').submit(function(e) {
     $(this)
     .find(':submit')
     .replaceWith($('<img>', {
-        src: 'imgs/loading2.gif',
+        src: 'imgs/loading.gif',
         width: '30px'
     }));
 });
