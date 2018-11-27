@@ -17,6 +17,23 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <i class="glyphicon glyphicon-exclamation-sign"></i>
+                </div>
+                <div class="media-body">
+                    <ul class="list-unstyled">
+                        @foreach ($errors->get('error') as $err)
+                        <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <h1 class="header-page">Contato</h1>
     <div class="row">
         <div class="col-md-5">
@@ -24,21 +41,21 @@
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="name">Nome</label>
-                    <input name="name" id="name" class="form-control" required>
+                    <input name="name" id="name" class="form-control" value="{{ old('name') }}" required>
                 </div>
                 <div class="form-group">
                     <label for="phone">telefone</label>
-                    <input name="phone" id="phone" class="form-control" required>
+                    <input name="phone" id="phone" class="form-control" value="{{ old('phone') }}" required>
                 </div>
                 <div class="form-group">
                     <label for="email">email</label>
-                    <input type="email" name="email" id="email" class="form-control" required>
+                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
                 </div>
                 <div class="form-group">
                     <label for="comment">Mensagem</label>
-                    <textarea name="comment" id="comment" class="form-control" required></textarea>
+                    <textarea name="comment" id="comment" class="form-control" required>{{ old('comment') }}</textarea>
                 </div>
-                <input type="submit" value="Enviar" class="btn btn-success">
+                <input type="submit" value="Enviar" class="btn btn-success {{old('name')?'disabled':''}}" {{old('name')?'disabled':''}}>
             </form>
         </div>
     </div>

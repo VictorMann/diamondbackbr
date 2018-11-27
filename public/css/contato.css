@@ -7,3 +7,10 @@
 .alert {
     margin-top: 2em;
 }
+.alert-danger .media-left {
+    padding: 0 15px;
+    font-size: 2.5em;
+}
+.alert-danger ul {
+    margin: 0;
+}

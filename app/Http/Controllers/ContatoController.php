@@ -15,16 +15,31 @@ class ContatoController extends Controller
 
     public function send (Request $request)
     {
-        Mail::to(config('mail.from.address'))
-        ->send(new ContatoShipped(
-            (object) $request->only([
-                'name',
-                'phone',
-                'email',
-                'comment'
-            ])
-        ));
+        try
+        {
+            Mail::to(config('mail.from.address'))
+            ->send(new ContatoShipped(
+                (object) $request->only([
+                    'name',
+                    'phone',
+                    'email',
+                    'comment'
+                ])
+            ));
 
-        return back()->with('send-ok', true);
+            return back()->with('send-ok', true);
+        }
+        catch (\Swift_TransportException $e)
+        {
+            return back()
+            ->withInput()
+            ->withErrors(new \Illuminate\Support\MessageBag([
+                'error' => [
+                    'Pedimos desculpas parece que houve um erro interno com nosso servidor.',
+                    'Nossa equipe já foi notificado sobre o problema.',
+                    'Por favor, tente nos enviar sua mensagem mais tarde. Obrigado!'
+                ]
+            ]));
+        }
     }
 }
