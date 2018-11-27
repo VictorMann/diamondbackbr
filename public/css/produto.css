@@ -62,8 +62,11 @@
 }
 .pr-rel {
     border-top: 2px solid #AAA;
-    padding-top: 30px;
     margin-bottom: 30px;
+}
+.header-rel {
+    text-transform: uppercase;
+    font-size: 1em;
 }
 .pr-rel ul {
     display: flex;

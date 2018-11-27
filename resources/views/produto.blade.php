@@ -36,6 +36,7 @@
     </div>
 
     <div class="pr-rel">
+        <h4 class="header-rel">Relacionados</h4>
         <ul class="l">
             @foreach ($relacionados as $r)
             <li>
