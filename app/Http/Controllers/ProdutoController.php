@@ -33,19 +33,26 @@ class ProdutoController extends Controller
 
     public function show ($slug)
     {
-        $produto = Produto::where('slug', $slug)->first();
-        $categoria = Categoria::findOrFail($produto->categoria_id);
-        $images = DB::table('images_produtos')->where('produto_id', $produto->id)->get();
-        $relacionados = Produto::where('categoria_id', $produto->categoria_id)
-        ->orderBy('dt_create', 'desc')
-        ->take(4)
-        ->get();
-
-        return view('produto')->with([
-            'produto' => $produto,
-            'categoria' => $categoria,
-            'images' => $images,
-            'relacionados' => $relacionados
-        ]);
+        try
+        {
+            $produto = Produto::where('slug', $slug)->first();
+            $categoria = Categoria::findOrFail($produto->categoria_id);
+            $images = DB::table('images_produtos')->where('produto_id', $produto->id)->get();
+            $relacionados = Produto::where('categoria_id', $produto->categoria_id)
+            ->orderBy('dt_create', 'desc')
+            ->take(4)
+            ->get();
+    
+            return view('produto')->with([
+                'produto' => $produto,
+                'categoria' => $categoria,
+                'images' => $images,
+                'relacionados' => $relacionados
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->view('errors.404', [], 404);
+        }
     }
 }
