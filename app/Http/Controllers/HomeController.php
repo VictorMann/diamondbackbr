@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index ()
     {
-        $produtos = Produto::take(6)->get();
+        $produtos = Produto::orderBy('dt_create', 'DESC')->take(6)->get();
         return view("home")->with([
             'produtos' => $produtos
         ]);
