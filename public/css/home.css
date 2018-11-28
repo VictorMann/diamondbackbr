@@ -104,6 +104,7 @@
     padding-bottom: 5px;
 }
 .gprod {
+    position: relative;
     width: calc(33.33333% - 5px);
     margin-left: 5px;
     margin-top: 5px;
@@ -122,4 +123,10 @@
 }
 .ctn-img {
     padding: 20px;
+    padding-bottom: 3em;
+}
+.gprod figcaption {
+    position: absolute;
+    width: 100%;
+    bottom: .5em;
 }
