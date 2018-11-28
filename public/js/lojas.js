@@ -13,7 +13,7 @@ $('area').on({
 
         $elMinEst.find('.ctn-image').append($('<img>', {'src': `imgs/mapa/${est}.gif`}));
         $elMinEst.find('.dados').html(() => {
-            let message = revendas[est].qtd 
+            let message = revendas[est].qtd
             ? revendas[est].qtd + ' revenda(s)'
             : 'não há revendas';
             return `${revendas[est].nome}<span class="rev">${message}</span>`;
@@ -36,7 +36,7 @@ $.get('api/revendas-per-estado', (data, status) => {
         data.forEach(est => 
             revendas[est.abbr] = {
                 'nome': est.nome,
-                'qtd': est.qtd
+                'qtd': parseInt(est.qtd)
             }
         );
     }
