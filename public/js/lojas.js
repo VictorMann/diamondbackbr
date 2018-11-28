@@ -6,7 +6,7 @@ $('area').on({
     'mouseover': function(e) {
         let est = this.dataset.e;
         $elEstMap.css('background-image', () =>
-            revendas[est] && revendas[est].qtd
+            revendas[est] && revendas[est].qtd > 0
             ? `url(imgs/mapa/${est}_ativo.gif)`
             : `url(imgs/mapa/${est}_.gif)`
         );
