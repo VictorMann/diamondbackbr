@@ -42,13 +42,13 @@
     </div>
     @if ($pageTotalIntes)
     <div class="detail-page bottom clearfix">
-            @if ($pageTotalIntes > $produtos->perPage())
-            <span>itens {{ $pageAtual }} para {{ $pageLimit }} de {{ $pageTotalIntes }} total</span>
-            @else
-            <span>{{ $pageTotalIntes }} item(ns)</span>
-            @endif
-            <div class="cnt-pagination">{{ $produtos->links() }}</div>
-        </div>
+        @if ($pageTotalIntes > $produtos->perPage())
+        <span>itens {{ $pageAtual }} para {{ $pageLimit }} de {{ $pageTotalIntes }} total</span>
+        @else
+        <span>{{ $pageTotalIntes }} item(ns)</span>
+        @endif
+        <div class="cnt-pagination">{{ $produtos->links() }}</div>
+    </div>
     @endif
 </div> 
 @stop
