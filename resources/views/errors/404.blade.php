@@ -10,7 +10,7 @@
 
 @section("content")
 <div class="container e404">
-    <h1>404 página não encotrada :'(</h1>
+    <h1>404 página não encontrada :'(</h1>
     <div class="detail">
         <p>Pedimos desculpas. A página que você buscou não pode ser encontrada.</p>
         <div>
