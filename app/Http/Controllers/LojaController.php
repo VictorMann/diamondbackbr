@@ -13,7 +13,7 @@ class LojaController extends Controller
         return view('revendedor');
     } 
 
-    public function lojas ($estado = null)
+    public function lojas ()
     {
         return view('lojas');
     }
