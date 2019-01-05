@@ -25,19 +25,16 @@ $('area').on({
     },
     'click': function(e) {
         let est = this.dataset.e;
-        if (!(revendas[est] && revendas[est].qtd)) {
-            e.preventDefault();
-        }
+        !revendas[est].qtd && e.preventDefault();
     }
 });
 
-$.get('api/revendas-per-estado', (data, status) => {
-    if (status == 'success') {
-        data.forEach(est => 
-            revendas[est.abbr] = {
-                'nome': est.nome,
-                'qtd': parseInt(est.qtd)
-            }
-        );
+fetch('api/revendas-per-estado')
+.then(res => res.ok ? res.json() : Promise.reject(res.statusText))
+.then(estados => estados.forEach(est => 
+    revendas[est.abbr] = {
+        'nome': est.nome,
+        'qtd': parseInt(est.qtd)
     }
-});
+))
+.catch(console.error);
