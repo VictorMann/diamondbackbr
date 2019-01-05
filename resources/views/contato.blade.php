@@ -5,7 +5,7 @@
 @endsection
 
 @section("styles")
-    <link rel="stylesheet" href="{{ url('/') }}/css/contato.css">
+    <link rel="stylesheet" href="{{ asset('css/contato.css') }}">
 @endsection
 
 @section("content")
@@ -63,5 +63,5 @@
 @endsection
 
 @section("scripts")
-    <script src="{{ url('/') }}/js/contato.js"></script>
+    <script src="{{ asset('js/contato.js') }}"></script>
 @stop

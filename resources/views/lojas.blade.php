@@ -1,7 +1,7 @@
 @extends("templates.master")
 
 @section("styles")
-    <link rel="stylesheet" href="{{ url('/') }}/css/lojas.css">
+    <link rel="stylesheet" href="{{ asset('css/lojas.css') }}">
 @endsection
 
 @section("title")
@@ -15,7 +15,7 @@
             <h1 class="header-page">Encontre a revenda mais perto de você</h1>
             <div class="ctn-mapa">
                 <div class="cx-mapa mapa-fake">
-                    <img class="mapa" src="{{ url('/') }}/imgs/mapa/mapa.png" alt="mapa" usemap="#mapa">
+                    <img class="mapa" src="{{ asset('imgs/mapa/mapa.png') }}" alt="mapa" usemap="#mapa">
                     <div class="mapa-img-estado-hover"></div>
                     <map name="mapa">
                         <area data-e="SP" shape="poly" href="{{ route('lojas.estado', ['estado' => 'sp']) }}" coords="519,526,521,520,529,519,533,516,530,514,523,513,520,510,514,513,508,515,502,519,493,518,491,514,487,510,488,504,488,499,490,495,488,491,481,492,478,483,478,479,478,476,476,470,473,465,466,468,455,468,449,471,444,470,440,470,439,465,431,463,424,462,417,463,411,467,408,472,402,475,400,479,397,486,395,490,392,498,386,507,376,512,390,512,396,512,400,515,409,516,414,520,422,521,428,521,434,522,436,529,437,534,440,541,443,546,443,552,453,550,457,556,457,559,462,560,470,554,477,548,483,545,488,539,496,536,498,535,505,534,511,535,513,528" />
@@ -69,5 +69,5 @@
 @endsection
 
 @section("scripts")
-    <script src="{{ url('/') }}/js/lojas.js"></script>
+    <script src="{{ asset('js/lojas.js') }}"></script>
 @endsection

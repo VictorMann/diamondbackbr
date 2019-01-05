@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield("title", "Home") | Diamondback Brasil, distribuidor exclusivo</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fjalla+One|Mada:400,700|Open+Sans:400,700">
-    <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield("styles")
 </head>
 <body>
@@ -85,8 +85,8 @@
             </div>
         </div>
     </footer>
-    <script src="{{ url('/') }}/js/jquery.min.js"></script>
-    <script src="{{ url('/') }}/js/app.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield("scripts")
 </body>
 </html>

@@ -1,7 +1,7 @@
 @extends("templates.master")
 
 @section("styles")
-    <link rel="stylesheet" href="{{ url('/') }}/css/garantia.css">
+    <link rel="stylesheet" href="{{ asset('css/garantia.css') }}">
 @endsection
 
 @section("title")

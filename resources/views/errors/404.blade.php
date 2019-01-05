@@ -5,7 +5,7 @@
 @stop
 
 @section("styles")
-    <link rel="stylesheet" href="{{ url('/') }}/css/404.css">
+    <link rel="stylesheet" href="{{ asset('css/404.css') }}">
 @stop
 
 @section("content")

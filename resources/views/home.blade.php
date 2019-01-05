@@ -1,15 +1,15 @@
 @extends("templates.master")
 
 @section("styles")
-<link rel="stylesheet" href="{{ url('/') }}/css/slick.css">
-<link rel="stylesheet" href="{{ url('/') }}/css/home.css">
+<link rel="stylesheet" href="{{ asset('css/slick.css') }}">
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 
 @section("content")
 <section class="ctn-sel">
     <ul class="sel">
-        <li><img src="{{ url('/') }}/imgs/carrossel/imageExample.jpg"></li>
-        <li><img src="{{ url('/') }}/imgs/carrossel/imageExample.jpg"></li>
+        <li><img src="{{ asset('imgs/carrossel/imageExample.jpg') }}"></li>
+        <li><img src="{{ asset('imgs/carrossel/imageExample.jpg') }}"></li>
     </ul>
 </section>
 <section class="ctn-cat">
@@ -22,7 +22,7 @@
     <figure class="gprod">
         <div class="ctn-img">
             <a href="{{ route('produtos.show', ['slug' => $produto->slug]) }}"> 
-                <img src="{{ url('/') }}/imgs/products/{{ $produto->image }}">
+                <img src="{{ asset('imgs/products/'. $produto->image) }}">
             </a>
         </div>
         <figcaption>
@@ -36,6 +36,6 @@
 @endsection
 
 @section("scripts")
-<script src="{{ url('/') }}/js/slick.min.js"></script>
-<script src="{{ url('/') }}/js/home.js"></script>
+<script src="{{ asset('js/slick.min.js') }}"></script>
+<script src="{{ asset('js/home.js') }}"></script>
 @stop

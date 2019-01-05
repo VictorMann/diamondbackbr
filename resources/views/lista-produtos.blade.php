@@ -1,7 +1,7 @@
 @extends("templates.master")
 
 @section("styles")
-    <link rel="stylesheet" href="{{ url('/') }}/css/lista-produtos.css">
+    <link rel="stylesheet" href="{{ asset('css/lista-produtos.css') }}">
 @stop
 
 @section("title")
@@ -27,9 +27,9 @@
     <div class="ctn-grade-img">
         @forelse ($produtos as $produto)
         <div class="ctn-product">
-            <a href="{{ url('/') . '/p/' . $produto->slug }}">
+            <a href="{{ route('produtos.show', ['slug' => $produto->slug]) }}">
                 <figure class="product-img">
-                    <img src="{{ url('/') }}/imgs/products/{{ $produto->image }}">
+                    <img src="{{ asset('imgs/products/'. $produto->image) }}">
                 </figure>
                 <h3 class="product-name">
                     {{ $produto->titulo }}

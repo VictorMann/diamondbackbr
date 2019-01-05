@@ -1,7 +1,7 @@
 @extends("templates.master")
 
 @section("styles")
-<link rel="stylesheet" href="{{ url('/') }}/css/produto.css">
+<link rel="stylesheet" href="{{ asset('css/produto.css') }}">
 @endsection
 
 @section("title")
@@ -12,7 +12,7 @@
 <section class="container pr">
     <div class="pr-header">
         <div class="pr-img">
-            <img src="{{ url('/') }}/imgs/products/{{ $produto->image }}">
+            <img src="{{ asset('imgs/products/'. $produto->image) }}">
         </div>
         <div class="pr-title">
             <h1 class="title">{{ $produto->titulo }} <small>{{ $categoria->nome }}</small></h1>
@@ -21,9 +21,9 @@
 
     @if (count($images))
     <ul class="pr-thumbnail">
-        <li><img src="{{ url('/') }}/imgs/products/{{ $produto->image }}"></li>
+        <li><img src="{{ asset('imgs/products/'. $produto->image) }}"></li>
         @foreach ($images as $image)
-        <li><img src="{{ url('/') }}/imgs/products/{{ $image->nome }}"></li>
+        <li><img src="{{ asset('imgs/products/'. $image->nome) }}"></li>
         @endforeach
     </ul>
     @endif
@@ -40,10 +40,10 @@
         <ul class="l">
             @foreach ($relacionados as $r)
             <li>
-                <a href="{{ url('/') }}/p/{{ $r->slug }}" title="{{ $r->titulo }}">
+                <a href="{{ route('produtos.show', ['slug' => $r->slug]) }}" title="{{ $r->titulo }}">
                     <div class="pr-r-img">
                         <figure>
-                            <img src="{{ url('/') }}/imgs/products/{{ $r->image }}" alt="{{ $r->titulo }}">
+                            <img src="{{ asset('imgs/products/'. $r->image) }}" alt="{{ $r->titulo }}">
                         </figure>
                         <p class="title">{{ $r->titulo }}</p>
                     </div>
@@ -57,5 +57,5 @@
 @endsection
 
 @section("scripts")
-<script src="{{ url('/') }}/js/produto.js"></script>
+<script src="{{ asset('js/produto.js') }}"></script>
 @stop
