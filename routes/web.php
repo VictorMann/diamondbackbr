@@ -22,6 +22,14 @@ Route::get('garantia', 'GarantiaController@index')->name('garantias.index');
 Route::get('contato', 'ContatoController@index')->name('contatos.index');
 Route::post('contato', 'ContatoController@send')->name('contatos.send');
 Route::get('search', 'SearchController@index')->name('search.index');
+
+// admin
+Auth::routes();
+Route::get('dashboard', 'AdminController@index')->name('dashboard');
+
+
+
+
 Route::get('{categoria}', 'ProdutoController@index')->name('produtos.index');
 
 
