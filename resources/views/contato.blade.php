@@ -34,7 +34,7 @@
         </div>
     @endif
 
-    <h1 class="header-page">Contato</h1>
+    <h1 class="header-page" id="contato-title">Contato</h1>
     <div class="row">
         <div class="col-md-5">
             <form class="form-contato" method="POST" action="{{ route('contatos.send') }}">
@@ -51,9 +51,10 @@
                     <label for="email">email</label>
                     <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group ctn-comment">
                     <label for="comment">Mensagem</label>
                     <textarea name="comment" id="comment" class="form-control" required>{{ old('comment') }}</textarea>
+                    <div class="inf">Não é necessário alterar este campo</div>
                 </div>
                 <input type="submit" value="Enviar" class="btn btn-success {{old('name')?'disabled':''}}" {{old('name')?'disabled':''}}>
             </form>

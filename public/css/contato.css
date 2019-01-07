@@ -14,3 +14,30 @@
 .alert-danger ul {
     margin: 0;
 }
+.ctn-comment {
+    position: relative;
+}
+#comment {
+    position: relative;
+    z-index: 1;
+}
+.inf {
+    position: absolute;
+    left: 0;
+    top: 2.1em;
+    font-size: 1.2rem;
+    width: 14rem;
+    text-align: center;
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid #AAA;
+    border-bottom-width: 3px;
+    border-bottom-color: goldenrod;
+    box-shadow: 0 1px 1px rgba(100, 100, 100, .5);
+    transform: scale(0);
+    transition: .3s 3s;
+}
+.inf.active {
+    left: calc(100% + 10px);
+    transform: scale(1);
+}

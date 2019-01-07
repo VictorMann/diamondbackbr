@@ -19,7 +19,7 @@
         <p>Invista no seu negócio, venha fazer parte deste time.</p>
     </div>
     <div>
-        <a href="{{ route('contatos.index') }}" class="btn btn-sm btn-primary">Deseja fazer parte do nosso time?</a>
+        <a href="{{ route('contatos.index') }}#rev" class="btn btn-sm btn-primary">Deseja fazer parte do nosso time?</a>
     </div>
 </section>
 @endsection
