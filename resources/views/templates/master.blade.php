@@ -15,7 +15,7 @@
     <header class="topo">
         <div class="container t1 clearfix">
             <a href="{{ url('/') }}" id="logo" class="pull-left">
-                <img src="{{ url('/') }}/imgs/logo.png" alt="Logomarca Diamondback">
+                <img src="{{ asset('imgs/logo.png') }}" alt="Logomarca Diamondback">
             </a>
             <form id="search" action="{{ route('search.index') }}" class="pull-right">
                 <input name="s" type="text" class="form-control" placeholder="o que você procura?" required>
