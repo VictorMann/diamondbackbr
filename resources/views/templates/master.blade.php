@@ -85,8 +85,9 @@
             </div>
         </div>
     </footer>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    @yield("scripts")
+    @section("scripts")
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    @show
 </body>
 </html>
