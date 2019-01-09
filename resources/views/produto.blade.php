@@ -1,6 +1,7 @@
 @extends("templates.master")
 
 @section("styles")
+<link rel="stylesheet" href="{{ asset('js/fancybox/jquery.fancybox-1.3.4.css') }}">
 <link rel="stylesheet" href="{{ asset('css/produto.css') }}">
 @endsection
 
@@ -10,12 +11,20 @@
 
 @section("content")
 <section class="container pr">
+    <!-- breadcrumb -->
+    <ul class="breadcrumb">
+        <li><a href="{{ route('produtos.index', [$categoria->nome]) }}">{{ $categoria->nome }}</a></li>
+        <li>{{ $produto->titulo }}</li>
+    </ul>
+
     <div class="pr-header">
         <div class="pr-img">
-            <img src="{{ asset('imgs/products/'. $produto->image) }}">
+            <a href="{{ asset('imgs/products/'. $produto->image) }}" class="fancybox-gallery" rel="group1">    
+                <img src="{{ asset('imgs/products/'. $produto->image) }}">
+            </a>
         </div>
         <div class="pr-title">
-            <h1 class="title">{{ $produto->titulo }} <small>{{ $categoria->nome }}</small></h1>
+            <h1 class="title">{{ $produto->titulo }} <small class="cod">cod.: {{ $produto->codigo }}</small></h1>
         </div>
     </div>
 
@@ -23,7 +32,11 @@
     <ul class="pr-thumbnail">
         <li><img src="{{ asset('imgs/products/'. $produto->image) }}"></li>
         @foreach ($images as $image)
-        <li><img src="{{ asset('imgs/products/'. $image->nome) }}"></li>
+        <li>
+            <a href="{{ asset('imgs/products/'. $image->nome) }}" class="fancybox-gallery" rel="group1">
+                <img src="{{ asset('imgs/products/'. $image->nome) }}">
+            </a>
+        </li>
         @endforeach
     </ul>
     @endif
@@ -57,5 +70,7 @@
 @endsection
 
 @section("scripts")
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script src="{{ asset('js/fancybox/jquery.fancybox-1.3.4.pack.js') }}"></script>
 <script src="{{ asset('js/produto.js') }}"></script>
 @stop
