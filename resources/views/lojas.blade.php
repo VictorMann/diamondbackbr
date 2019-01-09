@@ -69,5 +69,6 @@
 @endsection
 
 @section("scripts")
+    @parent
     <script src="{{ asset('js/lojas.js') }}"></script>
 @endsection

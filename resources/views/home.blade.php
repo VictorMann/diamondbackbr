@@ -36,6 +36,7 @@
 @endsection
 
 @section("scripts")
+@parent
 <script src="{{ asset('js/slick.min.js') }}"></script>
 <script src="{{ asset('js/home.js') }}"></script>
 @stop

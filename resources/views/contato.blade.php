@@ -64,5 +64,6 @@
 @endsection
 
 @section("scripts")
+    @parent
     <script src="{{ asset('js/contato.js') }}"></script>
 @stop
