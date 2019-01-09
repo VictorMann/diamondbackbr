@@ -2,18 +2,17 @@
 const BASE_URL = 'http://localhost/diamondback-laravel/public/';
 
 // valida envio do formulário
-$('#search').on('submit', function(e) {
+document.querySelector('#search').addEventListener('submit', function(event) {
     let valueBusca = this.elements.s.value.trim();
-    if (!valueBusca) e.preventDefault();
+    if (!valueBusca) event.preventDefault();
 });
 
-
 // newsletter
-$('#form-newsletter').submit(function(e) {
+document.querySelector('#form-newsletter').addEventListener('submit', function(event) {
     
-    e.preventDefault();
+    event.preventDefault();
 
-    let dado = $.param({email: this.elements.email.value});
+    let dado = _queryStringURL({email: this.elements.email.value});
 
     this.elements.email.value = '';
 
@@ -25,3 +24,12 @@ $('#form-newsletter').submit(function(e) {
     })
     .catch(console.log);
 });
+
+function _queryStringURL(obj) {
+    if (typeof(obj) != 'object') throw TypeError();
+    let query = [], typeValid = ['string', 'number'];
+    for (let prop in obj) 
+        typeValid.includes(typeof(obj[prop])) 
+        && query.push(`${prop}=${encodeURIComponent(obj[prop])}`);
+    return query.join('&');
+}
