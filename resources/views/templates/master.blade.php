@@ -17,14 +17,29 @@
             <a href="{{ url('/') }}" id="logo" class="pull-left">
                 <img src="{{ asset('imgs/logo.png') }}" alt="Logomarca Diamondback">
             </a>
-            <form id="search" action="{{ route('search.index') }}" class="pull-right">
+            <form class="search pull-right" action="{{ route('search.index') }}">
                 <input name="s" type="text" class="form-control" placeholder="o que você procura?" required>
                 <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
             </form>
         </div>
         <div class="ctn-nav-main">
             <nav class="container">
+
+                <button class="menu-mobile btn btn-link">
+                    <i class="glyphicon glyphicon-align-justify"></i>
+                </button>
+
+                <form class="search search-mobile" action="{{ route('search.index') }}">
+                    <input name="s" type="text" class="form-control" placeholder="o que você procura?" required>
+                    <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
+
                 <ul class="nav-main">
+                    <li class="clearfix">
+                        <button class="close">
+                            <span>&times;</span>
+                        </button>
+                    </li>
                     <li><a href="{{ url('/') }}">Home</a></li>
                     <li><a href="{{ route('diamondbacks.index') }}">Diamondback</a></li>
                     <li>
