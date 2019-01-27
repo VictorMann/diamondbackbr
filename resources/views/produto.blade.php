@@ -50,20 +50,24 @@
 
     <div class="pr-rel">
         <h4 class="header-rel">Relacionados</h4>
-        <ul class="l">
-            @foreach ($relacionados as $r)
-            <li>
-                <a href="{{ route('produtos.show', ['slug' => $r->slug]) }}" title="{{ $r->titulo }}">
-                    <div class="pr-r-img">
-                        <figure>
-                            <img src="{{ asset('imgs/products/'. $r->image) }}" alt="{{ $r->titulo }}">
-                        </figure>
-                        <p class="title">{{ $r->titulo }}</p>
-                    </div>
-                </a>
-            </li>
-            @endforeach
-        </ul>
+        <div class="shadow-right">
+            <div class="roller">
+                <ul class="l">
+                    @foreach ($relacionados as $r)
+                    <li>
+                        <a href="{{ route('produtos.show', ['slug' => $r->slug]) }}" title="{{ $r->titulo }}">
+                            <div class="pr-r-img">
+                                <figure>
+                                    <img src="{{ asset('imgs/products/'. $r->image) }}" alt="{{ $r->titulo }}">
+                                </figure>
+                                <p class="title">{{ $r->titulo }}</p>
+                            </div>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     </div>
 
 </section>

@@ -1,9 +1,11 @@
 .pr-header {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 30px;
 }
 .pr-header > * {
     margin-top: 5px;
+    min-width: 200px;
     flex: 1;
 }
 .breadcrumb {
@@ -107,4 +109,32 @@
 }
 .pr-r-img .title {
     color: #2a2f33;
+}
+@media (max-width: 991px) {
+    .shadow-right {
+        position: relative;
+    }
+    .shadow-right::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 17%;
+        height: 100%;
+        background: linear-gradient(to right, transparent, white);
+
+    }
+    .roller {
+        overflow-x: auto;
+    }
+    .l {
+        width: 940px;
+    }
+}
+
+@media (max-width: 425px) {
+    .pr-title .title {
+        font-size: 1.8em;
+    }
 }
