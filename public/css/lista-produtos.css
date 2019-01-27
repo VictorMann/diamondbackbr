@@ -15,8 +15,7 @@
     flex-wrap: wrap;
 }
 .ctn-product {
-    flex: 1;
-    min-width: 270px;
+    width: 270px;
     text-align: center;
     margin: 0 5px;
     margin-bottom: 15px;
@@ -58,4 +57,10 @@
     font-size: 1.3em;
     padding: 1.4rem 0;
     margin-bottom: 8em;
+}
+
+@media (max-width: 425px) {
+    .ctn-product {
+        width: 100%;
+    }
 }
