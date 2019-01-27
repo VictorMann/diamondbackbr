@@ -1,5 +1,5 @@
 // Url Base
-const BASE_URL = 'http://localhost/diamondback-laravel/public/';
+const BASE_URL = 'http://192.168.0.4/dl/public/';
 
 // valida envio do formulário
 document.querySelector('.search').addEventListener('submit', function(event) {
@@ -28,6 +28,20 @@ document.querySelector('.nav-main .close')
 .addEventListener('click', event =>
     fechaMenuMobile()
 );
+
+document.querySelectorAll('.nav-main a[href="#"]').forEach(a => {
+    a.addEventListener('click', function(event) {
+
+        let sub = this.parentNode.querySelector('.nav-sub');
+
+        document.querySelectorAll('.nav-main .nav-sub').forEach(el =>
+            sub != el && el.classList.remove('show')
+        );
+        
+        sub.classList.toggle('show');
+    });
+});
+
 
 
 

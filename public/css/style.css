@@ -101,9 +101,6 @@ a:hover {
 .nav-main > li:hover > a {
     color: #c7c7c7;
 }
-.nav-main li:hover .nav-sub {
-    display: block;
-}
 .nav-sub {
     display: none;
     position: absolute;
@@ -200,17 +197,18 @@ a:hover {
     margin: 0;
 }
 .nav-main a {
-    display: inline-block;
-    color: #FFF;
     text-transform: uppercase;
     font-family: 'Fjalla One', sans-serif;
     font-size: 1.4em;
     padding: .3em .5em;
     transition: color .1s;
 }
-
-.nav-main .close {
+.nav-main .botao-fechar {
     display: none;
+}
+.nav-main .close {
+    font-size: 25px;
+    margin-right: .5em;
 }
 
 @media (max-width: 768px) {
@@ -239,19 +237,17 @@ a:hover {
         background:#FFF;
         z-index: 10;
         transition: right .2s;
+        overflow: auto;
+        padding-bottom: 2em;
     }
-    .nav-main .close {
+    .nav-main .botao-fechar {
         display: block;
-        font-size: 25px;
-        margin-right: .5em;
     }
     .menu-ativo .nav-main {
         right: 0;
     }
     .nav-sub {
         font-size: .9em;
-        
-        display: block;
         position: static;
         list-style: none;
         background: inherit;
@@ -261,16 +257,17 @@ a:hover {
         min-width: initial;
         border: none;
     }
+    .nav-sub a:hover {
+        background: transparent;
+    }
     .nav-main > li:hover > a {
         color: inherit;
-    }
-    .nav-main li:hover .nav-sub {
-        display: block;
     }
     .nav-main li {
         text-align: initial;
     }
     .nav-main a {
+
         color: #000;
         transition: none;
         padding-left: .4em !important;
@@ -303,5 +300,17 @@ a:hover {
     .copyright .pull-left,
     .copyright .pull-right {
         float: none !important;
+    }
+}
+
+@media (max-width: 425px) {
+    .fend > * {
+        width: 100%;
+    }
+}
+
+@media not all and (max-width: 768px) {
+    .nav-main li:hover .nav-sub {
+        display: block;
     }
 }
