@@ -35,7 +35,7 @@
                 </form>
 
                 <ul class="nav-main">
-                    <li class="clearfix">
+                    <li class="clearfix botao-fechar">
                         <button class="close">
                             <span>&times;</span>
                         </button>
