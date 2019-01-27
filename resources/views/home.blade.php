@@ -8,8 +8,8 @@
 @section("content")
 <section class="ctn-sel">
     <ul class="sel">
-        <li><img src="{{ asset('imgs/carrossel/imageExample.jpg') }}"></li>
-        <li><img src="{{ asset('imgs/carrossel/imageExample.jpg') }}"></li>
+        <li data-p1="imageExample.jpg" data-p2="mobile1.jpg" class="wb"></li>
+        <li data-p1="imageExample.jpg" data-p2="mobile1.jpg" class="wb"></li>
     </ul>
 </section>
 <section class="ctn-cat">
