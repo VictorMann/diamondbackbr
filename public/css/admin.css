@@ -1,0 +1,50 @@
+*,
+*::after,
+*::before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/** default **/
+.flx {
+    display: flex;
+}
+img {
+    max-width: 100%;
+}
+.c {
+    position: relative;
+}
+.c0 {
+    position: absolute;
+    min-height: 100%;
+}
+.c0 > * {
+    padding-top: 3rem;
+}
+.c0 > section {
+    flex: 1;
+    order: 2;
+    background: #EEE;
+}
+.c0 > aside {
+    width: 15%;
+    order: 1;
+    background: #DDD;
+}
+.m-top {
+    text-align: center;
+}
+.logo img {
+    width: 80%;
+}
+.user {
+    margin-top: 2rem;
+}
+.user * {
+    display: block;
+}
+
+.avatar {
+    font-size: 1.8em;
+}
