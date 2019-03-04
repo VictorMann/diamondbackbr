@@ -17,9 +17,33 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $produtos = Produto::paginate(20);
+        $produtos = Produto::select('id', 'categoria_id', 'codigo', 'titulo', 'cor', 'ano', 'dt_modify');
+        
+        // caso houve busca
+        if ($busca = $request->input('q'))
+        {
+            $tipo = $request->input('tipo_busca');
+            
+            // caso tipo seja categoria
+            if ($tipo == 'categoria')
+            {
+                $produtos->whereHas('categoria', function($query) use ($busca) {
+                    $query->where('id', (int) $busca);
+                });
+            }
+            else
+            {
+                $produtos->where($tipo, 'LIKE', "%{$busca}%");
+            }
+        }
+        // aplicando paginação
+        $produtos = $produtos->paginate(20);
+
+        // caso houve busca adiciona a query de busca à paginação
+        if ($busca) $produtos->withPath("?q={$busca}&tipo_busca={$tipo}");
+        
         return view('admin.dashboard')->with('produtos', $produtos);
     }
 
@@ -77,7 +101,10 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Produto::findOrFail($id)->update($request->all());
+        $data = $request->all();
+        $data['dt_modify'] = date('Y-m-d H:i:s');
+        
+        Produto::findOrFail($id)->update($data);
 
         return redirect()->route('dashboard')->with([
             'action' => 'update', 
@@ -94,11 +121,12 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        
+        $codigo = Produto::findOrFail($id)->codigo;
+
         // Produto::destroy($id);
         return back()->with([
             'action' => 'destroy', 
-            'msg'    => "Produto {$id} removido com sucesso!",
+            'msg'    => "Produto {$codigo} removido com sucesso!",
             'class'  => 'alert alert-success'
         ]);
     }

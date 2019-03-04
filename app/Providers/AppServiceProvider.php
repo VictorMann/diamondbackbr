@@ -14,9 +14,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['partials.lista-categorias', 'admin.prod_create_update'], function ($view) {
-            $view->with('categorias', Categoria::get());
-        });
+        view()->composer(
+            [
+            'partials.lista-categorias',
+            'admin.dashboard',
+            'admin.prod_create_update',
+            ], 
+            function ($view) {
+                $view->with('categorias', Categoria::get());
+            }
+        );
     }
 
     /**

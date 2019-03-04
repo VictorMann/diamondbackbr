@@ -17,7 +17,7 @@
         <div class="col-xs-12 flx topo">
             <div class="ctn-nav flx">
                 <ul class="list-unstyled list-inline t-upper">
-                    <li><a href="#">Produtos</a></li>
+                    <li><a href="{{ route('dashboard') }}">Produtos</a></li>
                 </ul>
             </div>
             <div class="ctn-user flx">
@@ -34,7 +34,6 @@
             @yield("content")
         </div>
     </div>
-
 </div>
 <script src="{{ asset('js/admin.js') }}"></script>
 </body>

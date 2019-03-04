@@ -20,4 +20,9 @@ class Produto extends Model
     {
         return $this->hasMany(ImagesProduto::class);
     }
+
+    public function getDtModifyAttribute($value)
+    {
+        return implode('/', array_reverse(explode('-', $value)));
+    }
 }

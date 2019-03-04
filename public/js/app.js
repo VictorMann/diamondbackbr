@@ -64,6 +64,11 @@ document.querySelector('#form-newsletter').addEventListener('submit', function(e
     .catch(console.log);
 });
 
+/**
+ * Cria query-string através de um objeto
+ * @param {Object} obj 
+ * @return {String}
+ */
 function _queryStringURL(obj) {
     if (typeof(obj) != 'object') throw TypeError();
     let query = [], typeValid = ['string', 'number'];

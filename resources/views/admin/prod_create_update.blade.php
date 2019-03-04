@@ -140,12 +140,16 @@ img {
     
     <div class="f-btns">
         <input type="submit" class="btn btn-primary" value="<?=!empty($produto)?'Editar':'Criar'?>">
-        <a href="{{ route('dashboard') }}" class="btn btn-default">Voltar</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-default" id="voltar">Voltar</a>
     </div>
     
 </form>
 
 <script>
+// reatribui a ultima URL acessada gravada em localStorage.btnVoltar
+localStorage.btnVoltar && 
+(document.querySelector('#voltar').href = localStorage.btnVoltar);
+
 document.forms.fc.addEventListener('submit', function(event) {
     spinner();
     let descricao = this.elements.descricao;
