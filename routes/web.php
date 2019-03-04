@@ -26,7 +26,11 @@ Route::get('search', 'SearchController@index')->name('search.index');
 // admin
 Auth::routes();
 Route::get('dashboard', 'AdminController@index')->name('dashboard');
-
+Route::post('admin/produtos', 'AdminController@store')->name('produtos.store');
+Route::get('admin/produtos/create', 'AdminController@create')->name('produtos.create');
+Route::get('admin/produtos/{id}/edit', 'AdminController@edit')->name('produtos.edit');
+Route::put('admin/produtos/{id}', 'AdminController@update')->name('produtos.update');
+Route::delete('admin/produtos/{id}', 'AdminController@destroy')->name('produtos.destroy');
 
 
 

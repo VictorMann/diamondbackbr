@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Produto;
+use App\Categoria;
 
 class AdminController extends Controller
 {
@@ -17,7 +19,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $produtos = Produto::paginate(20);
+        return view('admin.dashboard')->with('produtos', $produtos);
     }
 
     /**
@@ -27,7 +30,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.prod_create_update');
     }
 
     /**
@@ -60,7 +63,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+        // dd($produto);
+        return view('admin.prod_create_update')->with('produto', $produto);
     }
 
     /**
@@ -72,7 +77,13 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Produto::findOrFail($id)->update($request->all());
+
+        return redirect()->route('dashboard')->with([
+            'action' => 'update', 
+            'msg'    => "Produto {$request->codigo} atualizado com sucesso!",
+            'class'  => 'alert alert-success'
+        ]);
     }
 
     /**
@@ -83,6 +94,12 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        // Produto::destroy($id);
+        return back()->with([
+            'action' => 'destroy', 
+            'msg'    => "Produto {$id} removido com sucesso!",
+            'class'  => 'alert alert-success'
+        ]);
     }
 }
