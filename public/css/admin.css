@@ -79,3 +79,95 @@ a {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/** prod_create **/
+@keyframes anima_loading {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+.form-prod {
+    width: 100%;
+    max-width: 900px;
+    flex-wrap: wrap;
+}
+.form-prod > * {
+    flex: 1;
+    /* border: 1px dotted salmon; */
+    margin-right: 10px;
+}
+.f-dados {
+    flex: 3;
+}
+.f-btns {
+    flex: auto;
+    width: 100%;
+}
+.form-control {
+    font-size: inherit;
+}
+select.form-control {
+    width: auto;
+}
+.f-cor {
+    margin-right: 1em;
+}
+.vl-loading {
+    position: fixed;
+    top: 0; bottom: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .7);
+    animation: anima_loading .5s;
+}
+.vl-loading-content {
+    height: 50px;
+    width: 50px;
+    background: url("/imgs/loading2.gif") no-repeat center;
+    background-size: 500%;
+    animation: anima_loading .3s;
+    animation-delay: .3s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+/* images **/
+.ctn-mini {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.ctn-mini > * {
+    display: flex;
+    align-items: center;
+    width: calc(50% - 3px);
+    /* border: 1px dotted blue; */
+    margin-top: 6px;
+    background: white;
+}
+.ctn-mini > *:nth-child(3n+1) {
+    margin-left: 0;
+}
+img {
+    max-width: 100%;
+}
+
+
+/** Upload de imagens **/
+.up-img {
+    width: 75px;
+    height: 75px;
+    background: #CCC url("/imgs/icon-img.png") no-repeat center;
+    background-size: 60%;
+    border-radius: 10px;
+    border: 5px solid #DDD;
+    cursor: pointer;
+
+    
+}
+.up-img:hover {
+    background-size: 65%;
+}
+.up-img input {
+    display: none;
+}

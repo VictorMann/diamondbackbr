@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Produto;
+use App\ImagesProduto;
 use App\Categoria;
 
 class AdminController extends Controller
@@ -39,7 +40,7 @@ class AdminController extends Controller
             }
         }
         // aplicando paginação
-        $produtos = $produtos->paginate(20);
+        $produtos = $produtos->orderBy('dt_create', 'DESC')->paginate(20);
 
         // caso houve busca adiciona a query de busca à paginação
         if ($busca) $produtos->withPath("?q={$busca}&tipo_busca={$tipo}");
@@ -65,7 +66,72 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // cria instância
+        $produto = new Produto();
+
+        // atribui todos os campos exceto img
+        $produto->fill( $request->except(['img']) );
+        
+        // tipos de imagens válidas
+        $typeMimeValid = [
+            'image/gif',
+            'image/jpeg',
+            'image/jpg',
+            'imagem/png'
+        ];
+
+        if ($request->hasFile('img'))
+        {
+            $imagem_principal = null;
+            $imagens_mini = [];
+
+            foreach ($request->file('img') as $file)
+            {
+                if ($file->isValid() and in_array($file->getMimeType(), $typeMimeValid))
+                {
+                    if ( ! $imagem_principal ) $imagem_principal = $file;
+                    else $imagens_mini[] = $file;
+                }
+            }
+
+            if ($imagem_principal)
+            {
+                $imagem_principal->store('./', 'produtos');
+                $produto->image = $imagem_principal->hashName();
+                $produto->slug = str_slug($produto->titulo);
+                $produto->dt_public = date('Y-m-d H:i:s');
+                $produto->save();
+
+                // Se há alguma imagem adicional
+                if (count($imagens_mini))
+                {
+                    foreach ($imagens_mini as $mini)
+                    {
+                        $mini->store('./', 'produtos');
+                        $imagesProduto = new ImagesProduto();
+                        $imagesProduto->nome = $mini->hashName();
+                        $imagesProduto->produto()->associate($produto);
+                        $imagesProduto->save();
+                    }
+                }
+
+                return redirect()->route('dashboard')->with([
+                    'action' => 'create', 
+                    'msg'    => "Produto {$produto->codigo} criado!",
+                    'class'  => 'alert alert-success'
+                ]);
+            }
+            else
+            {
+                // Arquivos inválidos
+            }
+        }
+        else
+        {
+            // Não submeteu imagens
+        }
+
+        return back()->withInput();
     }
 
     /**

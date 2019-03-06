@@ -1,78 +1,7 @@
 @extends("templates.admin")
 
 @section("content")
-<style rel="stylesheet">
-@keyframes anima_loading {
-    from {opacity: 0}
-    to {opacity: 1}
-}
 
-.form-prod {
-    width: 100%;
-    max-width: 900px;
-    flex-wrap: wrap;
-}
-.form-prod > * {
-    flex: 1;
-    /* border: 1px dotted salmon; */
-    margin-right: 10px;
-}
-.f-dados {
-    flex: 3;
-}
-.f-btns {
-    flex: auto;
-    width: 100%;
-}
-.form-control {
-    font-size: inherit;
-}
-select.form-control {
-    width: auto;
-}
-.f-cor {
-    margin-right: 1em;
-}
-.vl-loading {
-    position: fixed;
-    top: 0; bottom: 0; left: 0; right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, .7);
-    animation: anima_loading .5s;
-}
-.vl-loading-content {
-    height: 50px;
-    width: 50px;
-    background: url("/imgs/loading2.gif") no-repeat center;
-    background-size: 500%;
-    animation: anima_loading .3s;
-    animation-delay: .3s;
-    animation-fill-mode: forwards;
-    opacity: 0;
-}
-/* images **/
-.ctn-mini {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.ctn-mini > * {
-    display: flex;
-    align-items: center;
-    width: calc(50% - 3px);
-    /* border: 1px dotted blue; */
-    margin-top: 6px;
-    background: white;
-}
-.ctn-mini > *:nth-child(3n+1) {
-    margin-left: 0;
-}
-img {
-    max-width: 100%;
-}
-</style>
 <form class="flx form-prod" method="POST" action="{{ route('produtos.store') }}" name="fc" enctype="multipart/form-data">
     {{ csrf_field() }}
 
@@ -86,11 +15,11 @@ img {
     <div class="f-dados">
         <div class="form-group">
             <label for="codigo">cod.</label>
-            <input name="codigo" id="titulo" class="form-control" value="{{ $produto->codigo or '' }}">
+            <input name="codigo" id="titulo" class="form-control" value="{{ $produto->codigo or old('codigo', '') }}">
         </div>
         <div class="form-group">
             <label for="titulo">titulo</label>
-            <input name="titulo" id="titulo" class="form-control" value="{{ $produto->titulo or '' }}">
+            <input name="titulo" id="titulo" class="form-control" value="{{ $produto->titulo or old('titulo', '') }}">
         </div>
         <div class="form-group">
             <select name="categoria_id" class="form-control">
@@ -102,17 +31,17 @@ img {
         <div class="flx">
             <div class="form-group f-cor">
                 <label for="cor">cor</label>
-                <input name="cor" id="cor" class="form-control" value="{{ $produto->cor or '' }}">
+                <input name="cor" id="cor" class="form-control" value="{{ $produto->cor or old('cor', '') }}">
             </div>
             <div class="form-group">
                 <label for="ano">ano</label>
-                <input name="ano" id="ano" class="form-control" maxlength="4" value="{{ $produto->ano or '' }}">
+                <input name="ano" id="ano" class="form-control" maxlength="4" value="{{ $produto->ano or old('ano', '') }}">
             </div>
         </div>
         <div class="form-group">
             @php
                 // tratamento descrição
-                $descricao = isset($produto)? $produto->descricao : '';
+                $descricao = isset($produto)? $produto->descricao : old('descricao', '');
                 $descricao = strip_tags($descricao);
             @endphp
             <label for="descricao">descrição</label>
@@ -133,8 +62,12 @@ img {
                 </ul>
                 @endif
             @else
-                <input type="file" name="imgs" multiple>
+                <div class="ctn-img-pri"></div>
+                <ul class="ctn-mini list-unstyled"></ul>
             @endif
+            <div class="up-img" title="Inserir imagem">
+                <input type="file" name="img[]">
+            </div>
         </div>
     </div>
     
@@ -151,6 +84,16 @@ localStorage.btnVoltar &&
 (document.querySelector('#voltar').href = localStorage.btnVoltar);
 
 document.forms.fc.addEventListener('submit', function(event) {
+
+    let ctnImg = document.querySelector('.f-images .ctn-img-pri');
+
+    if (!ctnImg.childElementCount)
+    {
+        event.preventDefault();
+        alert('É necessário inserir pelo menos 1 imagem');
+        return;
+    }
+
     spinner();
     let descricao = this.elements.descricao;
     descricao.value = descricao.value
@@ -158,6 +101,57 @@ document.forms.fc.addEventListener('submit', function(event) {
     .replace(/>/g, '&gt;')
     .replace(/$/mg, '<br>');
 });
+
+document
+.querySelector('.f-images')
+.addEventListener('click', function(e) {
+    
+    if (e.target.classList.contains('up-img'))
+    {
+        let input_file = e.target.lastElementChild;
+        input_file.addEventListener('change', function(e) {
+            e.stopImmediatePropagation();
+            readAndPreview(this.files.item(0));
+        }, false);
+
+        input_file.click();
+    }
+
+}, false);
+
+function readAndPreview(file) {
+    if (file)
+    {
+        let reader = new FileReader();
+        reader.addEventListener('load', function(e) {
+            let ctnImg = document.querySelector('.f-images .ctn-img-pri');
+            let img = new Image();
+            img.src = this.result;
+            if (!ctnImg.childElementCount) ctnImg.appendChild(img);
+            else
+            {
+                let li = document.createElement('li');
+                li.appendChild(img);
+                document.querySelector('.f-images .ctn-mini').appendChild(li);
+            }
+
+            geraFileImgUpload();
+
+        }, false);
+
+        reader.readAsDataURL(file);
+    }
+}
+
+
+function geraFileImgUpload() {
+
+    let ctn = document.querySelector('.f-images .up-img');
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.name = 'img[]';
+    ctn.appendChild(input);
+}
 
 const spinner = () => {
 
