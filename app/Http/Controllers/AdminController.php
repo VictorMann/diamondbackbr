@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Produto;
 use App\ImagesProduto;
 use App\Categoria;
@@ -187,9 +188,32 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $codigo = Produto::findOrFail($id)->codigo;
+        $produto = Produto::findOrFail($id);
 
-        // Produto::destroy($id);
+        // obtem código do produto
+        $codigo = $produto->codigo;
+       
+        // removendo imagens adicionais
+        $produto->images->each(function($img) {
+            // path da mini
+            $path_img = $img->nome;
+            // removendo db
+            if ($img->delete())
+            {
+                // apagando imagem em disco
+                Storage::disk('produtos')->delete($path_img);
+            }
+        });
+
+        // path da imagem principal
+        $path_img = $produto->image;
+        // removendo db
+        if ($produto->delete())
+        {
+            // apagando imagem em disco
+            Storage::disk('produtos')->delete($path_img);
+        }
+        
         return back()->with([
             'action' => 'destroy', 
             'msg'    => "Produto {$codigo} removido com sucesso!",

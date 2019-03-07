@@ -58,6 +58,7 @@ return [
         'produtos' => [
             'driver' => 'local',
             'root' => public_path() . '/imgs/products',
+            'url' => env('APP_URL') . '/imgs/products',
             'visibility' => 'public',
         ],
 
