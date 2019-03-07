@@ -15,11 +15,11 @@
     <div class="f-dados">
         <div class="form-group">
             <label for="codigo">cod.</label>
-            <input name="codigo" id="titulo" class="form-control" value="{{ $produto->codigo or old('codigo', '') }}">
+            <input name="codigo" id="titulo" class="form-control" value="{{ $produto->codigo or old('codigo', '') }}" required>
         </div>
         <div class="form-group">
             <label for="titulo">titulo</label>
-            <input name="titulo" id="titulo" class="form-control" value="{{ $produto->titulo or old('titulo', '') }}">
+            <input name="titulo" id="titulo" class="form-control" value="{{ $produto->titulo or old('titulo', '') }}" required>
         </div>
         <div class="form-group">
             <select name="categoria_id" class="form-control">
@@ -53,16 +53,22 @@
             @if (isset($produto))
                 <div class="ctn-img-pri">
                     <img src="{{ asset('imgs/products/'. $produto->image) }}">
+                    <span class="remover" data-i="#{{ $produto->id }}"></span>
                 </div>
                 @if (count($produto->images))
                 <ul class="ctn-mini list-unstyled">
                     @foreach ($produto->images as $i)
-                        <li><img src="{{ asset('imgs/products/'. $i->nome) }}"></li>
+                        <li>
+                            <img src="{{ asset('imgs/products/'. $i->nome) }}">
+                            <span class="remover" data-i="{{ $i->id }}"></span>
+                        </li>
                     @endforeach
                 </ul>
                 @endif
             @else
-                <div class="ctn-img-pri"></div>
+                <div class="ctn-img-pri">
+                    <span class="remover"></span>
+                </div>
                 <ul class="ctn-mini list-unstyled"></ul>
             @endif
             <div class="up-img" title="Inserir imagem">
@@ -116,6 +122,49 @@ document
 
         input_file.click();
     }
+    else if (e.target.classList.contains('remover'))
+    {
+        // imagens do banco
+        if (e.target.dataset.i)
+        {
+            let input = document.forms.fc.elements.ri;
+            if (input)
+            {
+                input.value += `, ${e.target.dataset.i}`;
+            }
+            else
+            {
+                input       = document.createElement('input');
+                input.name  = 'ri';
+                input.type  = 'hidden';
+                input.value = e.target.dataset.i;
+
+                document.forms.fc.prepend(input);
+            }
+
+            delete e.target.dataset.i;
+        }
+
+        let parent = e.target.parentNode;
+        let img = parent.querySelector('img');
+
+        if (img.dataset.hash)
+        {
+            let input = document
+            .querySelector('.up-img')
+            .querySelector(`[data-hash="${img.dataset.hash}"]`);
+            input.parentNode.removeChild(input);
+        }
+
+        if (parent.tagName == 'LI')
+        {
+            parent.parentNode.removeChild(parent);
+        }
+        else
+        {
+            parent.removeChild( parent.firstChild );
+        }
+    }
 
 }, false);
 
@@ -127,15 +176,23 @@ function readAndPreview(file) {
             let ctnImg = document.querySelector('.f-images .ctn-img-pri');
             let img = new Image();
             img.src = this.result;
-            if (!ctnImg.childElementCount) ctnImg.appendChild(img);
+            // gerando hash para ref em input
+            img.dataset.hash = parseInt(Math.random() * new Date().getTime());
+            if ( ! ctnImg.querySelector('img') ) ctnImg.prepend(img);
             else
             {
-                let li = document.createElement('li');
-                li.appendChild(img);
-                document.querySelector('.f-images .ctn-mini').appendChild(li);
+                let li   = document.createElement('li');
+                let span = document.createElement('span');
+                span.className = 'remover';
+
+                li.append(img);
+                li.append(span);
+
+                document.querySelector('.f-images .ctn-mini').append(li);
             }
 
-            geraFileImgUpload();
+            // passando hash da imagem para o input
+            geraFileImgUpload(img.dataset.hash);
 
         }, false);
 
@@ -144,13 +201,14 @@ function readAndPreview(file) {
 }
 
 
-function geraFileImgUpload() {
+function geraFileImgUpload(hash_img) {
 
     let ctn = document.querySelector('.f-images .up-img');
     let input = document.createElement('input');
     input.type = 'file';
     input.name = 'img[]';
-    ctn.appendChild(input);
+    input.dataset.hash = hash_img;
+    ctn.append(input);
 }
 
 const spinner = () => {
@@ -164,8 +222,8 @@ const spinner = () => {
     vlContent = document.createElement('div');
     vlContent.classList.add('vl-loading-content');
 
-    vlLoading.appendChild(vlContent);
-    document.body.appendChild(vlLoading);
+    vlLoading.append(vlContent);
+    document.body.append(vlLoading);
 };
 </script>
 @stop

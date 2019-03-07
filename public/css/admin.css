@@ -131,6 +131,23 @@ select.form-control {
     animation-fill-mode: forwards;
     opacity: 0;
 }
+
+.ctn-img-pri,
+.ctn-mini li {
+    position: relative;
+}
+
+.f-images img + .remover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 2em;
+    height: 2em;
+    background: black;
+    border-radius: 50%;
+}
+
 /* images **/
 .ctn-mini {
     display: flex;
