@@ -52,28 +52,33 @@
         <div class="img-pri">
             @if (isset($produto))
                 <div class="ctn-img-pri">
-                    <img src="{{ asset('imgs/products/'. $produto->image) }}">
+                    <img src="{{ asset('imgs/products/'. $produto->images->shift()->nome) }}">
                     <span class="remover" data-i="#{{ $produto->id }}"></span>
+                    <input class="order" name="order[]" value="1" maxlength="2">
                 </div>
-                @if (count($produto->images))
-                <ul class="ctn-mini list-unstyled">
-                    @foreach ($produto->images as $i)
-                        <li>
-                            <img src="{{ asset('imgs/products/'. $i->nome) }}">
-                            <span class="remover" data-i="{{ $i->id }}"></span>
-                        </li>
-                    @endforeach
-                </ul>
+                @if ($produto->images->count() > 1)
+                    <ul class="ctn-mini list-unstyled">
+                        @foreach ($produto->images as $key => $i)
+                            <li>
+                                <img src="{{ asset('imgs/products/'. $i->nome) }}">
+                                <span class="remover" data-i="{{ $i->id }}"></span>
+                                <input class="order" name="order[]" value="{{ $key + 2 }}" maxlength="2">
+                            </li>
+                        @endforeach
+                    </ul>
                 @endif
             @else
                 <div class="ctn-img-pri">
                     <span class="remover"></span>
+                    <input class="order" name="order[]" value="" maxlength="2">
                 </div>
                 <ul class="ctn-mini list-unstyled"></ul>
             @endif
+
             <div class="up-img" title="Inserir imagem">
                 <input type="file" name="img[]">
             </div>
+
         </div>
     </div>
     
@@ -91,9 +96,9 @@ localStorage.btnVoltar &&
 
 document.forms.fc.addEventListener('submit', function(event) {
 
-    let ctnImg = document.querySelector('.f-images .ctn-img-pri');
+    let imgPri = document.querySelector('.f-images .ctn-img-pri img');
 
-    if (!ctnImg.childElementCount)
+    if (!imgPri)
     {
         event.preventDefault();
         alert('É necessário inserir pelo menos 1 imagem');
@@ -112,6 +117,8 @@ document
 .querySelector('.f-images')
 .addEventListener('click', function(e) {
     
+    
+
     if (e.target.classList.contains('up-img'))
     {
         let input_file = e.target.lastElementChild;
@@ -162,7 +169,7 @@ document
         }
         else
         {
-            parent.removeChild( parent.firstChild );
+            parent.removeChild( img );
         }
     }
 
@@ -175,18 +182,34 @@ function readAndPreview(file) {
         reader.addEventListener('load', function(e) {
             let ctnImg = document.querySelector('.f-images .ctn-img-pri');
             let img = new Image();
+            let nOrder = 1 + [].reduce.call(
+                document.querySelectorAll('.f-images .order'),
+                (min, el) => Math.max(el.value, min), 
+                Number.MIN_VALUE
+            );
             img.src = this.result;
             // gerando hash para ref em input
             img.dataset.hash = parseInt(Math.random() * new Date().getTime());
-            if ( ! ctnImg.querySelector('img') ) ctnImg.prepend(img);
+            if ( ! ctnImg.querySelector('img') )
+            {
+                ctnImg.prepend(img);
+                ctnImg.querySelector('.order').value = nOrder;
+            }
             else
             {
                 let li   = document.createElement('li');
                 let span = document.createElement('span');
                 span.className = 'remover';
 
+                let order = document.createElement('input');
+                order.className = 'order';
+                order.name = 'order[]';
+                order.value = nOrder;
+                order.maxLength = 2;
+
                 li.append(img);
                 li.append(span);
+                li.append(order);
 
                 document.querySelector('.f-images .ctn-mini').append(li);
             }

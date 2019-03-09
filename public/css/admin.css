@@ -147,6 +147,18 @@ select.form-control {
     background: black;
     border-radius: 50%;
 }
+.f-images .order {
+    display: none;
+}
+.f-images img + .remover + .order {
+    display: initial;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+}
 
 /* images **/
 .ctn-mini {

@@ -71,7 +71,8 @@ class AdminController extends Controller
         $produto = new Produto();
 
         // atribui todos os campos exceto img
-        $produto->fill( $request->except(['img']) );
+        $produto->fill( $request->except(['img', 'order']) );
+        $ordem = $request->order;
         
         // tipos de imagens válidas
         $typeMimeValid = [
@@ -83,39 +84,35 @@ class AdminController extends Controller
 
         if ($request->hasFile('img'))
         {
-            $imagem_principal = null;
-            $imagens_mini = [];
-
-            foreach ($request->file('img') as $file)
+            $images = [];
+            
+            foreach ($request->file('img') as $i => $file)
             {
                 if ($file->isValid() and in_array($file->getMimeType(), $typeMimeValid))
                 {
-                    if ( ! $imagem_principal ) $imagem_principal = $file;
-                    else $imagens_mini[] = $file;
+                    // atribui como indice o valor da ordem
+                    // daquela imagem especifica
+                    $images[ $ordem[$i] ] = $file;
                 }
             }
 
-            if ($imagem_principal)
+            if (count($images))
             {
-                $imagem_principal->store('./', 'produtos');
-                $produto->image = $imagem_principal->hashName();
+                
                 $produto->slug = str_slug($produto->titulo);
                 $produto->dt_public = date('Y-m-d H:i:s');
                 $produto->save();
-
-                // Se há alguma imagem adicional
-                if (count($imagens_mini))
+                
+                foreach ($images as $order => $image)
                 {
-                    foreach ($imagens_mini as $mini)
-                    {
-                        $mini->store('./', 'produtos');
-                        $imagesProduto = new ImagesProduto();
-                        $imagesProduto->nome = $mini->hashName();
-                        $imagesProduto->produto()->associate($produto);
-                        $imagesProduto->save();
-                    }
+                    $image->store('./', 'produtos');
+                    $imagesProduto = new ImagesProduto();
+                    $imagesProduto->nome = $image->hashName();
+                    $imagesProduto->order = $order;
+                    $imagesProduto->produto()->associate($produto);
+                    $imagesProduto->save();
                 }
-
+                
                 return redirect()->route('dashboard')->with([
                     'action' => 'create', 
                     'msg'    => "Produto {$produto->codigo} criado!",
@@ -155,7 +152,6 @@ class AdminController extends Controller
     public function edit($id)
     {
         $produto = Produto::findOrFail($id);
-        // dd($produto);
         return view('admin.prod_create_update')->with('produto', $produto);
     }
 
