@@ -29,13 +29,14 @@
         <div class="ctn-product">
             <a href="{{ route('produtos.show', ['slug' => $produto->slug]) }}">
                 <figure class="product-img">
-                    <img src="{{ asset('imgs/products/'. $produto->image) }}">
+                    <img src="{{ asset('imgs/products/'. $produto->images[0]->nome) }}">
                 </figure>
                 <h3 class="product-name">
                     {{ $produto->titulo }}
                 </h3>
             </a>
         </div>
+        
         @empty
             <p class="msg-not-items">Não existem produtos que correspondem com a busca.</p>
         @endforelse

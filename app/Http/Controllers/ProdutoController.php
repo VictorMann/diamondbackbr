@@ -14,8 +14,9 @@ class ProdutoController extends Controller
 
     public function index (Categoria $categoria)
     {
-        $produtos = Produto::select('titulo', 'ano', 'image', 'slug')
-        ->where('categoria_id', $categoria->id)
+        $produtos = $categoria
+        ->produtos()
+        ->select('id', 'titulo', 'slug')
         ->paginate(16);
 
         // obtem dados de paginação personalizados
@@ -37,15 +38,15 @@ class ProdutoController extends Controller
         {
             $produto = Produto::where('slug', $slug)->first();
             $relacionados = Produto::where('categoria_id', $produto->categoria_id)
+            ->where('id', '<>', $produto->id)
             ->orderBy('dt_create', 'desc')
             ->limit(4)
             ->get();
-    
+
             return view('produto')->with([
                 'produto' => $produto,
                 'categoria' => $produto->categoria,
-                'images' => $produto->images,
-                'relacionados' => $relacionados
+                'relacionados' => $relacionados,
             ]);
         }
         catch (\Exception $e)

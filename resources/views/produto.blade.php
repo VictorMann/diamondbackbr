@@ -19,8 +19,8 @@
 
     <div class="pr-header">
         <div class="pr-img">
-            <a href="{{ asset('imgs/products/'. $produto->image) }}" class="fancybox-gallery" rel="group1">    
-                <img src="{{ asset('imgs/products/'. $produto->image) }}">
+            <a href="{{ asset('imgs/products/'. $produto->images[0]->nome) }}" class="fancybox-gallery" rel="group1">    
+                <img src="{{ asset('imgs/products/'. $produto->images[0]->nome) }}">
             </a>
         </div>
         <div class="pr-title">
@@ -28,10 +28,9 @@
         </div>
     </div>
 
-    @if (count($images))
+    @if ($produto->images->count() > 1)
     <ul class="pr-thumbnail">
-        <li><img src="{{ asset('imgs/products/'. $produto->image) }}"></li>
-        @foreach ($images as $image)
+        @foreach ($produto->images as $image)
         <li>
             <a href="{{ asset('imgs/products/'. $image->nome) }}" class="fancybox-gallery" rel="group1">
                 <img src="{{ asset('imgs/products/'. $image->nome) }}">
@@ -58,7 +57,7 @@
                         <a href="{{ route('produtos.show', ['slug' => $r->slug]) }}" title="{{ $r->titulo }}">
                             <div class="pr-r-img">
                                 <figure>
-                                    <img src="{{ asset('imgs/products/'. $r->image) }}" alt="{{ $r->titulo }}">
+                                    <img src="{{ asset('imgs/products/'. $r->images[0]->nome) }}" alt="{{ $r->titulo }}">
                                 </figure>
                                 <p class="title">{{ $r->titulo }}</p>
                             </div>

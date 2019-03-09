@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\CustomerCollection\OrderImages;
 
 class ImagesProduto extends Model
 {
@@ -12,4 +13,10 @@ class ImagesProduto extends Model
     {
         return $this->belongsTo(Produto::class);
     }
+
+    public function newCollection(array $models = [])
+    {
+        $orderImages = new OrderImages($models);
+		return $orderImages->ordena();
+	}
 }

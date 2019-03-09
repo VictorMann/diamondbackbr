@@ -22,7 +22,7 @@
     <figure class="gprod">
         <div class="ctn-img">
             <a href="{{ route('produtos.show', ['slug' => $produto->slug]) }}"> 
-                <img src="{{ asset('imgs/products/'. $produto->image) }}">
+                <img src="{{ asset('imgs/products/'. $produto->images[0]->nome) }}">
             </a>
         </div>
         <figcaption>
