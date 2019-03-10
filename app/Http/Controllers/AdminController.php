@@ -10,10 +10,25 @@ use App\Categoria;
 
 class AdminController extends Controller
 {
+    private $produto;
+
+    private static $typeMimeImageValid = [
+        'image/gif',
+        'image/jpeg',
+        'image/jpg',
+        'imagem/png',
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');
     }
+
+    public static function getTypeMimeImageValid()
+    {
+        return self::$typeMimeImageValid;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -68,79 +83,30 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         // cria instância
-        $produto = new Produto();
-
-        // atribui todos os campos exceto img
-        $produto->fill( $request->except(['img', 'order']) );
-        $ordem = $request->order;
+        $this->produto = new Produto();
+        $this->produto->fill( $request->except(['img', 'order']) );
+        $this->produto->dt_public = date('Y-m-d H:i:s');
         
-        // tipos de imagens válidas
-        $typeMimeValid = [
-            'image/gif',
-            'image/jpeg',
-            'image/jpg',
-            'imagem/png'
-        ];
+        $slug = str_slug($this->produto->titulo);
 
-        if ($request->hasFile('img'))
+        // verifica se já existe algum produto com o mesmo slug
+        if (Produto::where('slug', $slug)->count())
         {
-            $images = [];
-            
-            foreach ($request->file('img') as $i => $file)
-            {
-                if ($file->isValid() and in_array($file->getMimeType(), $typeMimeValid))
-                {
-                    // atribui como indice o valor da ordem
-                    // daquela imagem especifica
-                    $images[ $ordem[$i] ] = $file;
-                }
-            }
-
-            if (count($images))
-            {
-                
-                $produto->slug = str_slug($produto->titulo);
-                $produto->dt_public = date('Y-m-d H:i:s');
-                $produto->save();
-                
-                foreach ($images as $order => $image)
-                {
-                    $image->store('./', 'produtos');
-                    $imagesProduto = new ImagesProduto();
-                    $imagesProduto->nome = $image->hashName();
-                    $imagesProduto->order = $order;
-                    $imagesProduto->produto()->associate($produto);
-                    $imagesProduto->save();
-                }
-                
-                return redirect()->route('dashboard')->with([
-                    'action' => 'create', 
-                    'msg'    => "Produto {$produto->codigo} criado!",
-                    'class'  => 'alert alert-success'
-                ]);
-            }
-            else
-            {
-                // Arquivos inválidos
-            }
-        }
-        else
-        {
-            // Não submeteu imagens
+            $slug .= '_'. str_random(6);
         }
 
+        $this->produto->slug = $slug;
+        $this->produto->save();
+
+        $this->saveImagesOrder($request->img, $request->order);
+
+        return redirect()->route('dashboard')->with([
+            'action' => 'create', 
+            'msg'    => "Produto {$this->produto->codigo} criado!",
+            'class'  => 'alert alert-success'
+        ]);
+        
         return back()->withInput();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -151,8 +117,8 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $produto = Produto::findOrFail($id);
-        return view('admin.prod_create_update')->with('produto', $produto);
+        $this->produto = Produto::findOrFail($id);
+        return view('admin.prod_create_update')->with('produto', $this->produto);
     }
 
     /**
@@ -164,16 +130,89 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        $this->produto = Produto::findOrFail($id);
+        $data = $request->except(['_token', '_method', 'order', 'ri', 'img']);
         $data['dt_modify'] = date('Y-m-d H:i:s');
+
+        // Caso foi removido imagens
+        if ($ri = $request->input('ri'))
+        {
+            $ri = explode(',', $ri);
+
+            foreach ($ri as $id)
+            {
+                $imagesProduto = ImagesProduto::findOrFail($id);
+                // apagando imagem em disco
+                Storage::disk('produtos')->delete($imagesProduto->nome);
+                // removendo do db
+                $imagesProduto->delete();
+            }
+        }
+
+        $this->saveImagesOrder($request->img, $request->order);
         
-        Produto::findOrFail($id)->update($data);
+        // Atualiza dados do produto
+        $this->produto->update($data);
 
         return redirect()->route('dashboard')->with([
             'action' => 'update', 
             'msg'    => "Produto {$request->codigo} atualizado com sucesso!",
             'class'  => 'alert alert-success'
         ]);
+    }
+
+    private function saveImagesOrder($file_images, $ordem = [])
+    {
+        $ordem = collect($ordem)->map(function($v) {
+            return json_decode($v);
+        });
+
+        if ($file_images)
+        {
+            $orderFilesUpload = $ordem->splice( - count($file_images) );
+            
+            $images = [];
+
+            foreach ($file_images as $i => $file)
+            {
+                if ($file->isValid() and in_array($file->getMimeType(), self::getTypeMimeImageValid()))
+                {
+                    // atribui como indice o valor da ordem
+                    // daquela imagem especifica
+                    $images[] = $file;
+                }
+            }
+    
+            if (count($images))
+            {
+                foreach ($images as $i => $image)
+                {
+                    $imagesProduto = new ImagesProduto();
+                    $imagesProduto->nome = $image->hashName();
+                    $imagesProduto->order = $orderFilesUpload[$i];
+                    $imagesProduto->produto()->associate($this->produto);
+                    $imagesProduto->save();
+    
+                    $image->store('./', 'produtos');
+                }
+            }
+            else
+            {
+                // Arquivos inválidos
+            }
+        }
+
+        if ($ordem->count())
+        {
+            $ordem->each(function($ref) {
+                $imagesProduto = ImagesProduto::find($ref->id);
+                if ($imagesProduto)
+                {
+                    $imagesProduto->order = $ref->p;
+                    $imagesProduto->save();
+                }
+            });
+        }
     }
 
     /**
@@ -184,32 +223,25 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $produto = Produto::findOrFail($id);
+        $this->produto = Produto::findOrFail($id);
 
         // obtem código do produto
-        $codigo = $produto->codigo;
+        $codigo = $this->produto->codigo;
        
         // removendo imagens adicionais
-        $produto->images->each(function($img) {
+        $this->produto->images->each(function($imagesProduto) {
             // path da mini
-            $path_img = $img->nome;
+            $path_img = $imagesProduto->nome;
             // removendo db
-            if ($img->delete())
+            if ($imagesProduto->delete())
             {
                 // apagando imagem em disco
                 Storage::disk('produtos')->delete($path_img);
             }
         });
-
-        // path da imagem principal
-        $path_img = $produto->image;
-        // removendo db
-        if ($produto->delete())
-        {
-            // apagando imagem em disco
-            Storage::disk('produtos')->delete($path_img);
-        }
         
+        $this->produto->delete();
+
         return back()->with([
             'action' => 'destroy', 
             'msg'    => "Produto {$codigo} removido com sucesso!",

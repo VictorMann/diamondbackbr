@@ -13,7 +13,10 @@ class SearchController extends Controller
     public function index (Request $request)
     {
         $search = $request->input('s');
-        $produtos = Produto::where('titulo', 'like', "%{$search}%")->paginate(16);
+        $produtos = Produto::select('id', 'titulo', 'slug')
+        ->where('titulo', 'like', "%{$search}%")
+        ->orderBy('dt_create', 'DESC')
+        ->paginate(16);
 
         $produtos->withPath('?s='. $search);
 

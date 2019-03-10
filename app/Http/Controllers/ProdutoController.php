@@ -17,6 +17,7 @@ class ProdutoController extends Controller
         $produtos = $categoria
         ->produtos()
         ->select('id', 'titulo', 'slug')
+        ->orderBy('dt_create', 'DESC')
         ->paginate(16);
 
         // obtem dados de paginação personalizados
@@ -39,7 +40,7 @@ class ProdutoController extends Controller
             $produto = Produto::where('slug', $slug)->first();
             $relacionados = Produto::where('categoria_id', $produto->categoria_id)
             ->where('id', '<>', $produto->id)
-            ->orderBy('dt_create', 'desc')
+            ->orderBy('dt_create', 'DESC')
             ->limit(4)
             ->get();
 
