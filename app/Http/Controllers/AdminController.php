@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Produto;
 use App\ImagesProduto;
 use App\Categoria;
@@ -27,6 +28,19 @@ class AdminController extends Controller
     public static function getTypeMimeImageValid()
     {
         return self::$typeMimeImageValid;
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
+    public function alterPassword(Request $request)
+    {
+        Auth::user()->password = bcrypt($request->pass);
+        Auth::user()->save();
+        return 1;
     }
 
     /**

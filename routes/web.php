@@ -24,7 +24,9 @@ Route::post('contato', 'ContatoController@send')->name('contatos.send');
 Route::get('search', 'SearchController@index')->name('search.index');
 
 // admin
-Auth::routes();
+Auth::routes(['register' => false]);
+Route::get('logout', 'AdminController@logout')->name('logout');
+Route::put('alter-password', 'AdminController@alterPassword')->name('alter-password');
 Route::get('dashboard', 'AdminController@index')->name('dashboard');
 Route::post('admin/produtos', 'AdminController@store')->name('produtos.store');
 Route::get('admin/produtos/create', 'AdminController@create')->name('produtos.create');

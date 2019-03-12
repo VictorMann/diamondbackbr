@@ -10,6 +10,24 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <style rel="stylesheet">
+    .ar-login {
+        position: relative;
+    }
+    .f-pass {
+        display: none;
+        position: absolute;
+        background: white;
+        width: 150px;
+        padding: 8px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+        z-index: 10;
+    }
+    .f-pass.active {
+        display: block;
+    }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -22,8 +40,18 @@
             </div>
             <div class="ctn-user flx">
                 <p><img src="{{ asset('imgs/logo.png') }}"></p>
-                <div>
-                    <a href="#">logout</a> | <a href="#"><i class="glyphicon glyphicon-user"></i></a>
+                <div class="ar-login">
+                    <a href="{{ route('logout') }}">logout</a> | <a href="#"><i class="glyphicon glyphicon-user"></i></a>
+                    
+                    <form method="POST" class="f-pass">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="form-group"><input type="password" name="pass" class="form-control" placeholder="Nova senha" required></div>
+                        <div class="form-group"><input type="password" name="pass2" class="form-control" placeholder="Repetir" required></div>
+                        <span class="text-danger bg-warning msg-pass"></span>
+                        <button type="submit" class="btn btn-success btn-xs btn-block">Salvar</button>
+                    </form>
+                    
                 </div>
             </div>
         </div>
@@ -36,5 +64,48 @@
     </div>
 </div>
 <script src="{{ asset('js/admin.js') }}"></script>
+<script>
+let fpass = document.querySelector('.f-pass');
+document
+.querySelector('.glyphicon-user')
+.addEventListener('click', function(event) {
+    fpass.classList.toggle('active');
+}, false);
+
+fpass
+.addEventListener('submit', function(event) {
+    
+    event.preventDefault();
+
+    let pass  = this.elements.pass;
+    let pass2 = this.elements.pass2;
+
+    if (pass.value != pass2.value) {
+        this.querySelector('.msg-pass').textContent = 'senhas não coincidem';
+    }
+    else {
+        this.querySelector('.msg-pass').textContent = '';
+
+        fetch('{{ route("alter-password") }}', {
+            method: "POST",
+            body: new FormData(this)
+        })
+        .then(res => res.ok ? res.text() : Promise.reject(res.statusText))
+        .then(dados => {
+            if (dados > 0) {
+                this.querySelector('.msg-pass').textContent = 'Sucesso!';
+                pass.value = pass2.value = '';
+                setTimeout(() => {
+                    this.classList.toggle('active');
+                    this.querySelector('.msg-pass').textContent = '';
+                }, 1000);
+            }
+            console.log(dados);
+        })
+        .catch(console.error);
+    }
+
+}, false);
+</script>
 </body>
 </html>
