@@ -128,6 +128,10 @@
 
     document.forms.fcar
     .addEventListener('submit', function(event) {
+        
+        // loading
+        spinner();
+
         del.value = (del.value.slice(-1) == ',')
         ? del.value.slice(0, -1) 
         : del.value;
