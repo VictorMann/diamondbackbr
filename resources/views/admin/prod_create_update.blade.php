@@ -15,7 +15,7 @@
     <div class="f-dados">
         <div class="form-group">
             <label for="codigo">cod.</label>
-            <input name="codigo" id="titulo" class="form-control" value="{{ $produto->codigo or old('codigo', '') }}" required>
+            <input name="codigo" id="codigo" class="form-control" value="{{ $produto->codigo or old('codigo', '') }}" required>
         </div>
         <div class="form-group">
             <label for="titulo">titulo</label>
@@ -57,6 +57,7 @@
                     <span class="remover" data-i="{{ $imagemPri->id }}"></span>
                     <input class="order db" name="" value="1" maxlength="2">
                     <input type="hidden" name="order[]" value='{"id":{{ $imagemPri->id }}, "p":1}'>
+                    <span class="n-order">1</span>
                 </div>
                 <ul class="ctn-mini list-unstyled">
                     @foreach ($produto->images as $key => $i)
@@ -65,19 +66,17 @@
                             <span class="remover" data-i="{{ $i->id }}"></span>
                             <input class="order db" name="" value="{{ $key + 2 }}" maxlength="2">
                             <input type="hidden" name="order[]" value='{"id":{{ $i->id }}, "p":{{ $key + 2 }}}'>
+                            <span class="n-order">{{ $key + 2 }}</span>
                         </li>
                     @endforeach
                 </ul>
             @else
-                <div class="ctn-img-pri">
-                    <span class="remover"></span>
-                    <input class="order" name="order[]" value="" maxlength="2">
-                </div>
+                <div class="ctn-img-pri"></div>
                 <ul class="ctn-mini list-unstyled"></ul>
             @endif
 
             <div class="up-img" title="Inserir imagem">
-                <input type="file" name="img[]">
+                <input type="file" name="img[]" class="add">
             </div>
 
         </div>
@@ -89,179 +88,158 @@
     </div>
     
 </form>
+@stop
 
-<script>
-// reatribui a ultima URL acessada gravada em localStorage.btnVoltar
-localStorage.btnVoltar && 
-(document.querySelector('#voltar').href = localStorage.btnVoltar);
-
-document.forms.fc.addEventListener('submit', function(event) {
-
-    let imgs = document.querySelectorAll('.f-images img');
-
-    if ( ! imgs.length )
-    {
-        event.preventDefault();
-        alert('É necessário inserir pelo menos 1 imagem');
-        return;
-    }
-
-    spinner();
-    let descricao = this.elements.descricao;
-    descricao.value = descricao.value
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/$/mg, '<br>');
-});
-
-document
-.querySelector('.f-images')
-.addEventListener('click', function(e) {
+@section('script')
+    <script>
     
+    // menu selecionado
+    $('.item-nav-produto').addClass('active');
+
+    // elementos base
+    const upImg  = document.querySelector('.up-img');
+    const ctnPri = document.querySelector('.ctn-img-pri');
+    const ctnMin = document.querySelector('.ctn-mini');
+
+    // reatribui a ultima URL acessada gravada em localStorage.btnVoltar
+    localStorage.btnVoltar && 
+    (document.querySelector('#voltar').href = localStorage.btnVoltar);
     
+    // envio de formulário
+    document.forms.fc.addEventListener('submit', function(event) {
+    
+        let imgs = document.querySelectorAll('.f-images img');
+    
+        if (!imgs.length) {
+            event.preventDefault();
+            alert('É necessário inserir pelo menos 1 imagem');
+            return;
+        }
+        
+        // loading
+        spinner();
 
-    if (e.target.classList.contains('up-img'))
-    {
-        let input_file = e.target.lastElementChild;
-        input_file.addEventListener('change', function(e) {
-            e.stopImmediatePropagation();
-            readAndPreview(this.files.item(0));
-        }, false);
-
-        input_file.click();
-    }
-    else if (e.target.classList.contains('remover'))
-    {
-        // imagens do banco
-        if (e.target.dataset.i)
+        let descricao = this.elements.descricao;
+        descricao.value = descricao.value
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/$/mg, '<br>');
+    });
+    
+    document
+    .querySelector('.f-images')
+    .addEventListener('click', function(e) {
+        
+        // adicionar imagens
+        if (e.target == upImg)
         {
-            let input = document.forms.fc.elements.ri;
-            if (input)
+            let file = e.target.querySelector('.add');
+            file.removeEventListener('change', readAndPreview, false);
+            file.addEventListener('change', readAndPreview, false);
+            file.click();
+        }
+        // remover imagens
+        else if (e.target.classList.contains('remover'))
+        {
+            // imagens do banco
+            if (e.target.dataset.i)
             {
-                input.value += `, ${e.target.dataset.i}`;
+                let input = document.forms.fc.elements.ri;
+                if (input)
+                {
+                    input.value += `, ${e.target.dataset.i}`;
+                }
+                else
+                {
+                    input       = document.createElement('input');
+                    input.name  = 'ri';
+                    input.type  = 'hidden';
+                    input.value = e.target.dataset.i;
+    
+                    document.forms.fc.prepend(input);
+                }
+            }
+    
+            let parent = e.target.parentNode;
+            let img = parent.querySelector('img');
+    
+            if (img.dataset.hash)
+            {
+                let input = upImg.querySelector(`[data-hash="${img.dataset.hash}"]`);
+                upImg.removeChild(input);
+            }
+    
+            if (parent.tagName == 'LI')
+            {
+                parent.parentNode.removeChild(parent);
             }
             else
             {
-                input       = document.createElement('input');
-                input.name  = 'ri';
-                input.type  = 'hidden';
-                input.value = e.target.dataset.i;
-
-                document.forms.fc.prepend(input);
+                ctnPri.textContent = '';
             }
+        }
+    
+    }, false);
+    
+    // manipula ordenacao de elementos já existens
+    $('.f-images').delegate('.order', 'change', function(event) {
 
-            delete e.target.dataset.i;
+        // order fake caso imagem do banco
+        if ($(this).hasClass('db'))
+        {
+            let $orderReal = $(this).siblings('[name="order[]"]');
+            let valueReal  = JSON.parse($orderReal.val());
+            valueReal.p    = this.value;
+            $orderReal.val(JSON.stringify(valueReal));
         }
 
-        let parent = e.target.parentNode;
-        let img = parent.querySelector('img');
+        $(this).siblings('.n-order').text(this.value);
+    });
 
-        if (img.dataset.hash)
-        {
-            let input = document
-            .querySelector('.up-img')
-            .querySelector(`[data-hash="${img.dataset.hash}"]`);
-            input.parentNode.removeChild(input);
-        }
+    function readAndPreview(event) {
 
-        if (parent.tagName == 'LI')
+        // se foi passado alugum arquivo
+        if (this.files.length)
         {
-            parent.parentNode.removeChild(parent);
-        }
-        else
-        {
-            parent.removeChild( img );
+            // tipo file
+            let type = this.files.item(0).type;
+            // tipo invalido
+            if (!tipeMimeValid.includes(type)) return;
+
+            // gera Hash
+            let hash = getHash();
+            this.dataset.hash = hash;
+
+            // retorna base64 da img
+            geraBase64(this.files.item(0))
+            .then(base64 => {
+
+                let order = getMaxOrder() +1;
+
+                let el = `
+                <span class="n-order">${order}</span>
+                <img src="${base64}" data-hash="${hash}">
+                <span class="remover"></span>
+                <input class="order" name="order[]" value="${order}" maxlength="2">`;
+
+                if (!ctnPri.querySelector('img'))
+                {
+                    ctnPri.innerHTML = el;
+                }
+                else
+                {
+                    $(ctnMin).append(`<li>${el}</li>`);
+                }
+            })
+            .then(() => {
+                this.classList.remove('add');
+                let input = document.createElement('input');
+                input.type = 'file';
+                input.name = 'img[]';
+                input.className = 'add';
+                upImg.append(input);
+            });
         }
     }
-
-}, false);
-
-
-document
-.querySelectorAll('.order.db')
-.forEach(el => 
-    el.addEventListener('change', function(e) {
-        let orderReal   = el.parentNode.querySelector('[name="order[]"]');
-        let valueReal   = JSON.parse(orderReal.value);
-        valueReal.p     = Number(this.value);
-        orderReal.value = JSON.stringify(valueReal);
-    }, false)
-);
-
-
-
-function readAndPreview(file) {
-    if (file)
-    {
-        let reader = new FileReader();
-        reader.addEventListener('load', function(e) {
-            let ctnImg = document.querySelector('.f-images .ctn-img-pri');
-            let img = new Image();
-            let nOrder = 1 + [].reduce.call(
-                document.querySelectorAll('.f-images .order'),
-                (min, el) => Math.max(el.value, min), 
-                Number.MIN_VALUE
-            );
-            img.src = this.result;
-            // gerando hash para ref em input
-            img.dataset.hash = parseInt(Math.random() * new Date().getTime());
-            if ( ! ctnImg.querySelector('img') )
-            {
-                ctnImg.prepend(img);
-                ctnImg.querySelector('.order').value = nOrder;
-            }
-            else
-            {
-                let li   = document.createElement('li');
-                let span = document.createElement('span');
-                span.className = 'remover';
-
-                let order = document.createElement('input');
-                order.className = 'order';
-                order.name = 'order[]';
-                order.value = nOrder;
-                order.maxLength = 2;
-
-                li.append(img);
-                li.append(span);
-                li.append(order);
-
-                document.querySelector('.f-images .ctn-mini').append(li);
-            }
-
-            // passando hash da imagem para o input
-            geraFileImgUpload(img.dataset.hash);
-
-        }, false);
-
-        reader.readAsDataURL(file);
-    }
-}
-
-
-function geraFileImgUpload(hash_img) {
-
-    let ctn = document.querySelector('.f-images .up-img');
-    let input = document.createElement('input');
-    input.type = 'file';
-    input.name = 'img[]';
-    input.dataset.hash = hash_img;
-    ctn.append(input);
-}
-
-const spinner = () => {
-
-    let vlLoading = document.querySelector('.vl-loading');
-    if (vlLoading) return;
-    
-    vlLoading = document.createElement('div');
-    vlLoading.classList.add('vl-loading');
-    
-    vlContent = document.createElement('div');
-    vlContent.classList.add('vl-loading-content');
-
-    vlLoading.append(vlContent);
-    document.body.append(vlLoading);
-};
-</script>
+    </script>
 @stop

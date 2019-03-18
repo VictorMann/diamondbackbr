@@ -21,8 +21,12 @@ img {
 .t-upper {
     text-transform: uppercase;
 }
+.t-upper .active {
+    background: #337ab7;
+    color: white;
+}
 a {
-    color: initial;
+    color: inherit;
 }
 .topo,
 .corpo {
@@ -149,7 +153,7 @@ select.form-control {
     border-radius: 50%;
     cursor: pointer;
 }
-.f-images .order {
+.n-order {
     display: none;
 }
 .f-images img + .remover + .order {

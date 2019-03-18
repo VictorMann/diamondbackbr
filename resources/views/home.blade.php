@@ -6,12 +6,11 @@
 @endsection
 
 @section("content")
+
 <section class="ctn-sel">
-    <ul class="sel">
-        <li data-p1="b1.jpg" data-p2="m1.jpg" class="wb"></li>
-        <li data-p1="b2.jpg" data-p2="m2.jpg" class="wb"></li>
-    </ul>
+    @include('partials.carrossel')
 </section>
+
 <section class="ctn-cat">
     <ul class="cat">
         @include('partials.lista-categorias')

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Produto;
 use App\ImagesProduto;
 use App\Categoria;
+use App\Carrossel;
 
 class AdminController extends Controller
 {
@@ -147,7 +148,16 @@ class AdminController extends Controller
         $this->produto = Produto::findOrFail($id);
         $data = $request->except(['_token', '_method', 'order', 'ri', 'img']);
         $data['dt_modify'] = date('Y-m-d H:i:s');
+        $slug = str_slug($data['titulo']);
 
+        // verifica se já existe algum produto com o mesmo slug
+        if (Produto::where('slug', $slug)->where('id', '<>', $id)->count())
+        {
+            $slug .= '_'. str_random(6);
+        }
+
+        $data['slug'] = $slug;
+        
         // Caso foi removido imagens
         if ($ri = $request->input('ri'))
         {
@@ -259,6 +269,79 @@ class AdminController extends Controller
         return back()->with([
             'action' => 'destroy', 
             'msg'    => "Produto {$codigo} removido com sucesso!",
+            'class'  => 'alert alert-success'
+        ]);
+    }
+
+    public function carrIndex()
+    {
+        $carrossels = Carrossel::orderBy('order')->get();
+        
+        return view('admin.carrossel')->with('carrossels', $carrossels);
+    }
+
+    public function carrUpdate(Request $request)
+    {
+        $ordem = null;
+
+        // verifica se há imagens para remover
+        if ($request->del)
+        {
+            $ids = explode(',', $request->del);
+            foreach ($ids as $id)
+            {
+                $c = Carrossel::find($id);
+                
+                if ($c) {
+                    // apagando imagem em disco
+                    Storage::disk('carrossel')->delete($c->nome);
+                    // removendo do db
+                    $c->delete();
+                }
+            }
+        }
+
+        // se tem order
+        if ($request->order)
+        {
+            $ordem = collect($request->order)->map(function($v) {
+                return json_decode($v);
+            });
+
+            // ordena imagens já existente e remove de order
+            $ordem = $ordem->filter(function($v) {
+                if (is_object($v))
+                {
+                    Carrossel::where('id', $v->id)->update([
+                        'order'      => $v->p,
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+                return is_numeric($v);
+            })->values();
+        }
+
+        // caso tenha novas imagens
+        if ($request->img)
+        {
+            foreach ($request->img as $i => $fileImg)
+            {
+                if ($fileImg->isValid() and in_array($fileImg->getMimeType(), self::getTypeMimeImageValid()))
+                {
+                    $c = new Carrossel();
+                    $c->nome  = $fileImg->hashName();
+                    $c->mini  = 'none';
+                    $c->order = $ordem[$i];
+                    $c->save();
+    
+                    $fileImg->store('./', 'carrossel');
+                }
+            }
+        }
+
+        return back()->with([
+            'action' => 'update', 
+            'msg'    => "Carrossel alterado com sucesso!",
             'class'  => 'alert alert-success'
         ]);
     }

@@ -33,7 +33,8 @@ Route::get('admin/produtos/create', 'AdminController@create')->name('produtos.cr
 Route::get('admin/produtos/{id}/edit', 'AdminController@edit')->name('produtos.edit');
 Route::put('admin/produtos/{id}', 'AdminController@update')->name('produtos.update');
 Route::delete('admin/produtos/{id}', 'AdminController@destroy')->name('produtos.destroy');
-
+Route::get('carrossel', 'AdminController@carrIndex')->name('carrossel');
+Route::post('carrossel', 'AdminController@carrUpdate')->name('carrossel.update');
 
 
 Route::get('{categoria}', 'ProdutoController@index')->name('produtos.index');

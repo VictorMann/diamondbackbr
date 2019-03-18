@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Categoria;
+use App\Carrossel;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('categorias', Categoria::get());
             }
         );
+
+        // carrossel
+        view()->composer('partials.carrossel', function($view) {
+            $view->with('carrossel', Carrossel::orderBy('order')->get());
+        });
     }
 
     /**

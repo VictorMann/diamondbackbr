@@ -28,6 +28,9 @@
         display: block;
     }
     </style>
+
+    @yield('style')
+    
 </head>
 <body>
 <div class="container">
@@ -35,7 +38,8 @@
         <div class="col-xs-12 flx topo">
             <div class="ctn-nav flx">
                 <ul class="list-unstyled list-inline t-upper">
-                    <li><a href="{{ route('dashboard') }}">Produtos</a></li>
+                    <li class="item-nav-produto"><a href="{{ route('dashboard') }}">Produtos</a></li>
+                    <li class="item-nav-carrossel"><a href="{{ route('carrossel') }}">Carrossel</a></li>
                 </ul>
             </div>
             <div class="ctn-user flx">
@@ -63,6 +67,14 @@
         </div>
     </div>
 </div>
+<script
+  src="http://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script
+src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+crossorigin="anonymous"></script>
 <script src="{{ asset('js/admin.js') }}"></script>
 <script>
 let fpass = document.querySelector('.f-pass');
@@ -107,5 +119,8 @@ fpass
 
 }, false);
 </script>
+
+@yield("script")
+
 </body>
 </html>

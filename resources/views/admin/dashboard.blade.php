@@ -25,65 +25,6 @@
                     <div class="glyphicon glyphicon-search"></div>
                 </button>
             </div>
-
-            
-            <script>
-                /**
-                 * Gera objeto partir da query URl
-                 * @return {Object}
-                 */
-                function getURLParaObject() {
-                    let q = location.search.substring(1).split('&');
-                    let o = {};
-                    
-                    q.forEach(d => {
-                        let pos = d.indexOf('=');
-                        if (pos == -1) return;
-                        let prop = d.substr(0, pos);
-                        let value = d.substr(pos+1);
-                        o[prop] = decodeURI(value);
-                    });
-
-                    return o;
-                }
-                // CASO BUSCA
-                let dadosBusca = getURLParaObject();
-                let formBusca = document.forms.fbusca;
-                ativaCampoBusca(dadosBusca['tipo_busca']);
-
-                if (dadosBusca['tipo_busca'])
-                {
-                    formBusca.elements['q'].value = dadosBusca['q'];
-                    formBusca.elements['tipo_busca'].value = dadosBusca['tipo_busca'];
-                }
-
-                formBusca.elements.tipo_busca.addEventListener('change', function(event) {
-                    ativaCampoBusca(this.value);
-                });
-
-                function ativaCampoBusca(tipo = null, formBusca = document.forms.fbusca) {
-                    
-                    formBusca
-                    .querySelectorAll('.q')
-                    .forEach(q => {
-                        
-                        if (tipo == 'categoria')
-                        {
-                            if (q.tagName == 'SELECT')
-                                q.name = 'q', q.classList.remove('hide');
-                            else
-                                q.name = '', q.classList.add('hide');
-                        }
-                        else
-                        {
-                            if (q.tagName == 'SELECT')
-                                q.name = '', q.classList.add('hide');
-                            else
-                                q.name = 'q', q.classList.remove('hide');
-                        }
-                    });
-                }
-            </script>
         </div>
     </form>
     <div>
@@ -134,13 +75,74 @@
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="DELETE">
     </form>
+</div>
+@stop
 
+@section('script')
     <script>
+        $('.item-nav-produto').addClass('active');
+
         document.querySelectorAll('.urlVoltar').forEach(el =>
             el.addEventListener('click', () => 
                 localStorage.btnVoltar = location.href
             )
         );
+
+        /**
+         * Gera objeto partir da query URl
+         * @return {Object}
+         */
+        function getURLParaObject() {
+            let q = location.search.substring(1).split('&');
+            let o = {};
+            
+            q.forEach(d => {
+                let pos = d.indexOf('=');
+                if (pos == -1) return;
+                let prop = d.substr(0, pos);
+                let value = d.substr(pos+1);
+                o[prop] = decodeURI(value);
+            });
+
+            return o;
+        }
+        // CASO BUSCA
+        let dadosBusca = getURLParaObject();
+        let formBusca = document.forms.fbusca;
+        ativaCampoBusca(dadosBusca['tipo_busca']);
+
+        if (dadosBusca['tipo_busca'])
+        {
+            formBusca.elements['q'].value = dadosBusca['q'];
+            formBusca.elements['tipo_busca'].value = dadosBusca['tipo_busca'];
+        }
+
+        formBusca.elements.tipo_busca.addEventListener('change', function(event) {
+            ativaCampoBusca(this.value);
+        });
+
+        function ativaCampoBusca(tipo = null, formBusca = document.forms.fbusca) {
+            
+            formBusca
+            .querySelectorAll('.q')
+            .forEach(q => {
+                
+                if (tipo == 'categoria')
+                {
+                    if (q.tagName == 'SELECT')
+                        q.name = 'q', q.classList.remove('hide');
+                    else
+                        q.name = '', q.classList.add('hide');
+                }
+                else
+                {
+                    if (q.tagName == 'SELECT')
+                        q.name = '', q.classList.add('hide');
+                    else
+                        q.name = 'q', q.classList.remove('hide');
+                }
+            });
+        }
     </script>
-</div>
-@stop
+    
+@endsection

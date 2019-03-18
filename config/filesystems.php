@@ -62,6 +62,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'carrossel' => [
+            'driver' => 'local',
+            'root' => base_path(env('BASE_PATH', 'public')) . '/imgs/carrossel',
+            'url' => env('APP_URL') . '/imgs/carrossel',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
