@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Área adminstrativa - Diamondback')</title>
+    <link rel="icon" href="{{ asset('imgs/favicon.png') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('imgs/favicon.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fjalla+One|Mada:400,700|Open+Sans:400,700">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}">
